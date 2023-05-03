@@ -1,1 +1,13 @@
 @import "vendors/_bootstrap";
+
+ul {
+    margin: 0 !important;
+}
+
+.form {
+    &-select {
+        &-per {
+            width: 5rem;
+        }
+    }
+}
