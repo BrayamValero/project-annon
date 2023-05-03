@@ -7,7 +7,7 @@ import FilepondUploadFiles from "@component/FilepondUploadFiles.vue"
     <div class="Index">
         <b-container class="my-5">
             <b-row class="justify-content-center">
-                <b-col>
+                <b-col cols="4">
                     <h1>Google Drive</h1>
                     <p>
                         Lorem ipsum dolor sit amet consectetur, adipisicing

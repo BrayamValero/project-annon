@@ -39,5 +39,14 @@ const handleFilePondInit = () => {
             v-bind:files="myFiles"
             v-on:init="handleFilePondInit"
         />
+        <b-button variant="primary" class="w-100" block>
+            Subir Archivos
+        </b-button>
     </div>
 </template>
+
+<style>
+.filepond--credits {
+    display: none;
+}
+</style>
