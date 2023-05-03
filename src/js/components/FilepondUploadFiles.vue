@@ -1,6 +1,10 @@
 <script setup>
 import { ref } from "vue"
 
+defineProps({
+    title: String,
+})
+
 // Import Vue FilePond
 import vueFilePond from "vue-filepond"
 
