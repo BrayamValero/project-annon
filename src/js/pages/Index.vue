@@ -1,8 +1,7 @@
 <script setup>
 import { ref, computed } from "vue"
-import TableUserFiles from "@component/TableUserFiles.vue"
+import UserFilesContainer from "@component/UserFilesContainer.vue"
 import FilepondUploadFiles from "@component/FilepondUploadFiles.vue"
-import FolderUserFiles from "@component/FolderUserFiles.vue"
 
 // Overall Files data => Todo: Get items from backend
 const allFiles = ref([
@@ -62,14 +61,14 @@ const allFiles = ref([
     },
 ])
 
-const isTableView = ref(true)
-const isTableViewOptions = ref([
-    { text: "Tabla", value: true },
-    { text: "Carpetas", value: false },
+const selectedView = ref("table")
+const viewOptions = ref([
+    { text: "Tabla", value: "table" },
+    { text: "Carpetas", value: "files" },
 ])
 
 const getSelectedToggleName = computed(() => {
-    return isTableView.value ? "Vista de Tablas" : "Vista de Carpetas"
+    return selectedView.value ? "Vista de Tablas" : "Vista de Carpetas"
 })
 </script>
 
@@ -94,17 +93,19 @@ const getSelectedToggleName = computed(() => {
                         <!-- Toggle View -->
                         <b-form-group v-slot="{ ariaDescribedby }" class="mb-4">
                             <b-form-radio-group
-                                v-model="isTableView"
-                                :options="isTableViewOptions"
+                                v-model="selectedView"
+                                :options="viewOptions"
                                 :aria-describedby="ariaDescribedby"
                                 name="view-option"
                                 buttons
                             ></b-form-radio-group>
                         </b-form-group>
                     </div>
-                    <!-- Toggle Components -->
-                    <TableUserFiles :files="allFiles" v-if="isTableView" />
-                    <FolderUserFiles :files="allFiles" v-else />
+                    <!-- Main Table & Files view (With Search & Pagination)-->
+                    <UserFilesContainer
+                        :files="allFiles"
+                        :selected-view="selectedView"
+                    />
                 </b-col>
             </b-row>
         </b-container>
