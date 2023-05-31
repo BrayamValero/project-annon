@@ -10,6 +10,7 @@ export default defineConfig({
             "@": path.resolve(__dirname, "./src"),
             "@lib": path.resolve(__dirname, "./node_modules"),
             "@component": path.resolve(__dirname, "./src/js/components"),
+            "@store": path.resolve(__dirname, "./src/js/store"),
             "@page": path.resolve(__dirname, "./src/js/pages"),
         },
     },
