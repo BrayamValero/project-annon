@@ -24,6 +24,17 @@ const actions = {
                 this.files = response
             })
     },
+    async addFile(file) {
+        await fetch("https://backuplospatios.com/api/files", {
+            method: "POST",
+            body: file,
+        })
+            .then((response) => response.json())
+            .catch((error) => console.error("Error:", error))
+            .then((response) => {
+                this.files.push(response)
+            })
+    },
 }
 
 export const useFileStore = defineStore("file", {
