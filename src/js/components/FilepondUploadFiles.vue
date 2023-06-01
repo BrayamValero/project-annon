@@ -1,5 +1,9 @@
 <script setup>
 import { ref, reactive } from "vue"
+import { useFileStore } from "@store/files"
+
+// access the `store` variable anywhere in the component ✨
+const fileStore = useFileStore()
 
 defineProps({
     title: String,
@@ -41,10 +45,10 @@ const handleFilePondAddFile = (err, val) => {
     const { id, filenameWithoutExtension, fileSize, fileExtension, file } = val
     const data = {
         id,
-        filenameWithoutExtension,
-        fileSize,
-        fileExtension,
         file,
+        name: filenameWithoutExtension,
+        size: fileSize,
+        type: fileExtension,
     }
     filesData.files.push(data)
 }
@@ -64,10 +68,26 @@ const options = [
     { value: 2, text: "Carpeta II" },
     { value: 3, text: "Carpeta III" },
 ]
+
+const submitFiles = () => {
+    const { userId, folderId, files } = filesData
+    const FORM_DATA = new FormData()
+
+    FORM_DATA.append("userId", userId)
+    FORM_DATA.append("folderId", folderId)
+
+    Object.entries(files).forEach(([key, val]) => {
+        const { file, name } = val
+        FORM_DATA.append("files[]", file, name)
+    })
+
+    fileStore.addFiles(FORM_DATA)
+}
 </script>
 
 <template>
     <div class="FilepondUploadFiles">
+        <pre class="mb-3">{{ filesData }}</pre>
         <b-form-select
             v-model="filesData.folderId"
             :options="options"
@@ -85,7 +105,7 @@ const options = [
             @addfile="handleFilePondAddFile"
             @removefile="handleFilePondRemoveFile"
         />
-        <b-button variant="primary" class="w-100" block>
+        <b-button variant="primary" class="w-100" @click="submitFiles" block>
             Subir Archivos
         </b-button>
     </div>

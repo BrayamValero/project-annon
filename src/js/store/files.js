@@ -24,15 +24,19 @@ const actions = {
                 this.files = response
             })
     },
-    async addFile(file) {
+    async addFiles(files) {
+        // Display the values
+        for (const value of files.values()) {
+            console.log(value)
+        }
         await fetch("https://backuplospatios.com/api/files", {
             method: "POST",
-            body: file,
+            body: files,
         })
             .then((response) => response.json())
             .catch((error) => console.error("Error:", error))
             .then((response) => {
-                this.files.push(response)
+                response.forEach((el) => this.files.push(el))
             })
     },
 }
