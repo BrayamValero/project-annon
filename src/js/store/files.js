@@ -25,10 +25,6 @@ const actions = {
             })
     },
     async addFiles(files) {
-        // Display the values
-        for (const value of files.values()) {
-            console.log(value)
-        }
         await fetch("https://backuplospatios.com/api/files", {
             method: "POST",
             body: files,
