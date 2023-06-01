@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue"
+import { ref, reactive } from "vue"
 
 defineProps({
     title: String,
@@ -24,15 +24,56 @@ const FilePond = vueFilePond(
     FilePondPluginImagePreview
 )
 
-const myFiles = ref([])
+const files = ref([])
 
-const handleFilePondInit = () => {
-    console.log("Filepond init")
+// Defining Data Format
+const dataFormat = {
+    userId: 1,
+    folderId: 1,
+    files: [],
 }
+
+// [Cloning] => Cloning Object
+const filesData = reactive({ ...dataFormat })
+
+// [Filepond] => Adding File
+const handleFilePondAddFile = (err, val) => {
+    const { id, filenameWithoutExtension, fileSize, fileExtension, file } = val
+    const data = {
+        id,
+        filenameWithoutExtension,
+        fileSize,
+        fileExtension,
+        file,
+    }
+    filesData.files.push(data)
+}
+
+// [Filepond] => Removing File
+const handleFilePondRemoveFile = (err, file) => {
+    const { id } = file
+    const index = filesData.files.findIndex((file) => file.id === id)
+    if (index !== -1) {
+        filesData.files.splice(index, 1)
+    }
+}
+
+const options = [
+    { value: null, text: "Selecciona una carpeta" },
+    { value: 1, text: "Carpeta I" },
+    { value: 2, text: "Carpeta II" },
+    { value: 3, text: "Carpeta III" },
+]
 </script>
 
 <template>
     <div class="FilepondUploadFiles">
+        <b-form-select
+            v-model="filesData.folderId"
+            :options="options"
+            size="sm"
+            class="mb-3"
+        />
         <file-pond
             ref="pond"
             name="files"
@@ -40,8 +81,9 @@ const handleFilePondInit = () => {
             label-idle="Arrastra los archivos aqui"
             allow-multiple="true"
             accepted-file-types="image/jpeg, image/png"
-            v-bind:files="myFiles"
-            v-on:init="handleFilePondInit"
+            :files="files"
+            @addfile="handleFilePondAddFile"
+            @removefile="handleFilePondRemoveFile"
         />
         <b-button variant="primary" class="w-100" block>
             Subir Archivos
