@@ -4,7 +4,6 @@ import { createPinia } from "pinia"
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue"
 import App from "./App.vue"
 import routes from "@router/index"
-import VueCookies from "vue-cookies"
 
 // Import Bootstrap & Bootstrap Vue CSS & SCSS
 import "@/scss/main.scss"
@@ -16,7 +15,6 @@ Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(pinia)
-Vue.use(VueCookies)
 
 const router = new VueRouter({
     mode: "history",
