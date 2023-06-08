@@ -3,10 +3,8 @@ import VueRouter from "vue-router"
 import { createPinia } from "pinia"
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue"
 import App from "./App.vue"
-
-// Views
-import Index from "@page/Index.vue"
-import Login from "@page/Login.vue"
+import routes from "@router/index"
+import VueCookies from "vue-cookies"
 
 // Import Bootstrap & Bootstrap Vue CSS & SCSS
 import "@/scss/main.scss"
@@ -18,14 +16,11 @@ Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(pinia)
+Vue.use(VueCookies)
 
 const router = new VueRouter({
     mode: "history",
-    routes: [
-        { path: "/", name: "Home", component: Index },
-        { path: "/dashboard", name: "Dashboard", component: Index },
-        { path: "/login", name: "Login", component: Login },
-    ],
+    routes,
 })
 
 new Vue({

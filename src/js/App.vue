@@ -1,4 +1,10 @@
-<!-- component matched by the route will render here -->
+<script setup>
+import Navbar from "@component/Navbar.vue"
+</script>
+
 <template>
-    <router-view></router-view>
+    <div>
+        <Navbar />
+        <router-view></router-view>
+    </div>
 </template>

@@ -2,10 +2,9 @@ import { defineStore } from "pinia"
 
 // Defining State
 const state = () => ({
-    userInfo: null,
+    userInfo: localStorage.getItem("jwt_token") || null,
 })
 
-// Defining Getters
 const getters = {}
 
 // Defining Actions
@@ -21,10 +20,14 @@ const actions = {
                 if (res.status === "200") {
                     console.log("Success", res)
                     this.userInfo = res.data
+                    localStorage.setItem("jwt_token", res.data)
                 } else {
                     console.log("Error", res)
                 }
             })
+    },
+    async logout() {
+        localStorage.removeItem("jwt_token")
     },
 }
 

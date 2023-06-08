@@ -38,7 +38,6 @@ const submitForm = () => {
                         elit. Nihil, ullam?
                     </p>
                     <b-form>
-                        <pre>{{ userInfo }}</pre>
                         <b-form-group
                             label="Correo Electrónico"
                             label-for="input-email"
