@@ -1,10 +1,11 @@
+import VueRouter from "vue-router"
+// Views Defined
 import Index from "@page/Index.vue"
 import Login from "@page/Login.vue"
 import Dashboard from "@page/Dashboard.vue"
 
 function authUser(to, from, next) {
     const JWT_TOKEN = localStorage.getItem("jwt_token")
-
     if (!JWT_TOKEN) {
         return next({ name: "Login" })
     } else {
@@ -21,7 +22,7 @@ function userLogged(to, from, next) {
     }
 }
 
-export const routes = [
+const routes = [
     {
         path: "/",
         name: "Home",
@@ -41,4 +42,9 @@ export const routes = [
     },
 ]
 
-export default routes
+const router = new VueRouter({
+    mode: "history",
+    routes,
+})
+
+export default router

@@ -21,6 +21,7 @@ const actions = {
                     console.log("Success", res)
                     this.userInfo = res.data
                     localStorage.setItem("jwt_token", res.data)
+                    this.router.push({ name: "Dashboard" })
                 } else {
                     console.log("Error", res)
                 }
@@ -28,6 +29,8 @@ const actions = {
     },
     async logout() {
         localStorage.removeItem("jwt_token")
+        this.userInfo = null
+        this.router.push({ name: "Home" })
     },
 }
 
