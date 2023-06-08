@@ -6,11 +6,7 @@ const state = () => ({
 })
 
 // Defining Getters
-const getters = {
-    // convertFiles: (state) => {
-    //     return state.files
-    // },
-}
+const getters = {}
 
 // Defining Actions
 const actions = {

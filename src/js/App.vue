@@ -1,7 +1,4 @@
-<script setup>
-import Index from "@page/Index.vue"
-</script>
-
+<!-- component matched by the route will render here -->
 <template>
-    <Index />
+    <router-view></router-view>
 </template>
