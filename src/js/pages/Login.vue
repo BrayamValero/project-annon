@@ -1,11 +1,9 @@
 <script setup>
 import { reactive } from "vue"
-import { storeToRefs } from "pinia"
 import { useAuthStore } from "@store/auth"
 
 // access the `store` variable anywhere in the component ✨
 const authStore = useAuthStore()
-const { userInfo } = storeToRefs(authStore)
 
 // Defining Data Format
 const dataFormat = {
