@@ -1,6 +1,7 @@
 <script setup>
 defineProps({
     form: Object,
+    type: String,
 })
 </script>
 
@@ -9,7 +10,7 @@ defineProps({
         <b-form-group label="Nombre y Apellido">
             <b-form-input
                 v-model="form.fullname"
-                type="email"
+                type="text"
                 placeholder="Ingresa tu nombre"
                 required
             ></b-form-input>
@@ -17,7 +18,6 @@ defineProps({
 
         <b-form-group label="Correo Electronico">
             <b-form-input
-                id="input-1"
                 v-model="form.email"
                 type="email"
                 placeholder="Ingresa tu correo"
@@ -25,11 +25,11 @@ defineProps({
             ></b-form-input>
         </b-form-group>
 
-        <b-form-group label="Contraseña">
+        <b-form-group label="Contraseña" v-if="type === 'add'">
             <b-form-input
+                type="password"
                 v-model="form.password"
                 placeholder="Ingresa la contraseña"
-                required
             ></b-form-input>
         </b-form-group>
 

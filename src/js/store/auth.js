@@ -7,7 +7,9 @@ const state = () => ({
 
 const getters = {
     getHeaders(state) {
-        return { Authorization: `Bearer ${state.token}` }
+        return {
+            Authorization: `Bearer ${state.token}`,
+        }
     },
 }
 
@@ -30,7 +32,7 @@ const actions = {
                     this.cookies.set("jwt_token", data)
                     this.router.push({ name: "Dashboard" })
                 } else {
-                    console.log("Error", res)
+                    console.log("Error", message)
                 }
             })
     },

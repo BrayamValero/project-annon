@@ -7,7 +7,7 @@ const authStore = useAuthStore()
 
 // Defining Data Format
 const dataFormat = {
-    email: "adminuser@gmail.com",
+    email: "admin@example.com",
     password: "123456",
 }
 

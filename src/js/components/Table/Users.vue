@@ -83,22 +83,25 @@ const editUser = ({ id, email, fullname, password, role_id }) => {
     formData.id = id
     formData.email = email
     formData.fullname = fullname
-    formData.password = password
     formData.role_id = role_id
     // Opening Modal
     formAction.value = "edit"
     formUserModal.value.show()
 }
 const deleteUser = (id) => {
-    userStore.deleteUser(id)
+    const FORM_DATA = new FormData()
+    FORM_DATA.append("id", id)
+    userStore.deleteUser(FORM_DATA)
 }
 
 // Submitting form
 const submitForm = (action) => {
+    const FORM_DATA = new FormData()
+    Object.entries(formData).forEach(([key, val]) => FORM_DATA.append(key, val))
     if (action === "add") {
-        userStore.addUser(formData)
+        userStore.addUser(FORM_DATA)
     } else if (action == "edit") {
-        userStore.editUser(formData)
+        userStore.editUser(FORM_DATA)
     }
 }
 
@@ -113,12 +116,13 @@ const getFormAction = computed(() => {
         <b-row>
             <b-col cols="6">
                 <!-- Search -->
-                <b-form-input
+                <!-- <b-form-input
                     size="sm"
                     type="search"
                     placeholder="Buscar Usuarios"
                     v-model="filter"
-                />
+                    autocomplete="off"
+                /> -->
             </b-col>
             <b-col cols="6" class="text-right">
                 <!-- Add New User -->
@@ -137,7 +141,7 @@ const getFormAction = computed(() => {
             :filter="filter"
             :on-filtered="onFiltered"
         >
-            <template #cell(index)="{ item }">
+            <template #cell(index)="{ item, index }">
                 <b-button
                     class="mr-2"
                     variant="warning"
@@ -164,7 +168,7 @@ const getFormAction = computed(() => {
         />
         <!-- Modals -->
         <b-modal ref="formUserModal" :title="getFormAction + ' Usuario'">
-            <FormUser :form="formData" />
+            <FormUser :form="formData" :type="formAction" />
             <template #modal-footer>
                 <b-button variant="primary" @click="submitForm(formAction)">
                     {{ getFormAction }}

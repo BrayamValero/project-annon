@@ -33,36 +33,39 @@ const actions = {
             .then((response) => response.json())
             .catch((error) => console.error("Error:", error))
             .then((response) => {
-                console.log(response)
-                // this.user.push(response)
+                console.log("response", response)
+                this.users.push(response)
             })
     },
     async editUser(user) {
         const authStore = useAuthStore()
-        await fetch("http://backend-backup-patios.test/users", {
+        await fetch("http://backend-backup-patios.test/users/edit", {
             headers: authStore.getHeaders,
-            method: "PUT",
+            method: "POST",
             body: user,
         })
             .then((response) => response.json())
             .catch((error) => console.error("Error:", error))
             .then((response) => {
-                console.log(response)
-                // this.user.push(response)
+                console.log("response", response)
+                const index = this.users.findIndex((u) => u.id === response.id)
+                this.users = response
             })
     },
-    async deleteUser(id) {
+    async deleteUser(user) {
         const authStore = useAuthStore()
-        await fetch("http://backend-backup-patios.test/users", {
+        await fetch("http://backend-backup-patios.test/users/delete", {
             headers: authStore.getHeaders,
-            method: "DELETE",
-            body: { id },
+            method: "POST",
+            body: user,
         })
-            .then((response) => response.json())
+            .then((response) => {})
             .catch((error) => console.error("Error:", error))
             .then((response) => {
-                console.log(response)
-                // this.user.push(response)
+                const index = this.users.findIndex(
+                    (el) => el.id == user.get("id")
+                )
+                this.users.splice(index, 1)
             })
     },
 }
