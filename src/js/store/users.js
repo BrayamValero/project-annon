@@ -33,7 +33,36 @@ const actions = {
             .then((response) => response.json())
             .catch((error) => console.error("Error:", error))
             .then((response) => {
-                this.user.push(response)
+                console.log(response)
+                // this.user.push(response)
+            })
+    },
+    async editUser(user) {
+        const authStore = useAuthStore()
+        await fetch("http://backend-backup-patios.test/users", {
+            headers: authStore.getHeaders,
+            method: "PUT",
+            body: user,
+        })
+            .then((response) => response.json())
+            .catch((error) => console.error("Error:", error))
+            .then((response) => {
+                console.log(response)
+                // this.user.push(response)
+            })
+    },
+    async deleteUser(id) {
+        const authStore = useAuthStore()
+        await fetch("http://backend-backup-patios.test/users", {
+            headers: authStore.getHeaders,
+            method: "DELETE",
+            body: { id },
+        })
+            .then((response) => response.json())
+            .catch((error) => console.error("Error:", error))
+            .then((response) => {
+                console.log(response)
+                // this.user.push(response)
             })
     },
 }

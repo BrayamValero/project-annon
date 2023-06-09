@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, reactive, onMounted, computed } from "vue"
 import TableItems from "@component/TableItems.vue"
+import FormUser from "@component/Form/User.vue"
 
 // Adding User Store
 import { storeToRefs } from "pinia"
@@ -54,16 +55,57 @@ const onFiltered = (filteredItems) => {
     currentPage.value = 1
 }
 
+const formUserModal = ref(0)
+
+// Defining Data Format
+const dataFormat = {
+    id: null,
+    fullname: null,
+    email: null,
+    password: null,
+    role_id: null,
+}
+
+// [Cloning] => Cloning Object
+const formData = reactive({ ...dataFormat })
+const formAction = ref(null)
+
 // Extra Methods => Add, Edit, Delete
 const addUser = () => {
-    console.log("Adding User...")
+    // Setting formData
+    Object.assign(formData, dataFormat)
+    // Opening Modal
+    formAction.value = "add"
+    formUserModal.value.show()
 }
-const editUser = (id) => {
-    console.log("Editing User...", id)
+const editUser = ({ id, email, fullname, password, role_id }) => {
+    // Setting formData
+    formData.id = id
+    formData.email = email
+    formData.fullname = fullname
+    formData.password = password
+    formData.role_id = role_id
+    // Opening Modal
+    formAction.value = "edit"
+    formUserModal.value.show()
 }
 const deleteUser = (id) => {
-    console.log("Deleting User...", id)
+    userStore.deleteUser(id)
 }
+
+// Submitting form
+const submitForm = (action) => {
+    if (action === "add") {
+        userStore.addUser(formData)
+    } else if (action == "edit") {
+        userStore.editUser(formData)
+    }
+}
+
+// Computed Getter
+const getFormAction = computed(() => {
+    return formAction.value === "add" ? "Agregar" : "Editar"
+})
 </script>
 
 <template>
@@ -109,7 +151,7 @@ const deleteUser = (id) => {
                     size="sm"
                     @click="deleteUser(item.id)"
                 >
-                    Suspender
+                    Eliminar
                 </b-button>
             </template>
         </TableItems>
@@ -120,5 +162,14 @@ const deleteUser = (id) => {
             :per-page="perPage"
             aria-controls="my-table"
         />
+        <!-- Modals -->
+        <b-modal ref="formUserModal" :title="getFormAction + ' Usuario'">
+            <FormUser :form="formData" />
+            <template #modal-footer>
+                <b-button variant="primary" @click="submitForm(formAction)">
+                    {{ getFormAction }}
+                </b-button>
+            </template>
+        </b-modal>
     </div>
 </template>
