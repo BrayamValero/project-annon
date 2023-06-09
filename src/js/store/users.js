@@ -3,7 +3,7 @@ import { useAuthStore } from "@store/auth"
 
 // Defining State
 const state = () => ({
-    files: [],
+    users: [],
 })
 
 // Defining Getters
@@ -11,34 +11,34 @@ const getters = {}
 
 // Defining Actions
 const actions = {
-    async getFiles() {
+    async getUsers() {
         const authStore = useAuthStore()
-        await fetch("http://backend-backup-patios.test/files", {
+        await fetch("http://backend-backup-patios.test/users", {
             headers: authStore.getHeaders,
             method: "GET",
         })
             .then((response) => response.json())
             .catch((error) => console.error("Error:", error))
             .then((response) => {
-                this.files = response
+                this.users = response
             })
     },
-    async addFiles(files) {
+    async addUser(user) {
         const authStore = useAuthStore()
-        await fetch("http://backend-backup-patios.test/files", {
+        await fetch("http://backend-backup-patios.test/users", {
             headers: authStore.getHeaders,
             method: "POST",
-            body: files,
+            body: user,
         })
             .then((response) => response.json())
             .catch((error) => console.error("Error:", error))
             .then((response) => {
-                response.forEach((el) => this.files.push(el))
+                this.user.push(response)
             })
     },
 }
 
-export const useFileStore = defineStore("file", {
+export const useUserStore = defineStore("user", {
     state,
     getters,
     actions,
