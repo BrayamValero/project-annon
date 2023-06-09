@@ -24,8 +24,6 @@ const onFiltered = (filteredItems) => {
     // Trigger pagination to update the number of buttons/pages due to filtering
     totalRows.value = filteredItems.length
     currentPage.value = 1
-
-    console.log("onFiltered: Executting", totalRows.value)
 }
 </script>
 

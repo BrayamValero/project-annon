@@ -55,22 +55,37 @@ const onFiltered = (filteredItems) => {
 }
 
 // Extra Methods => Add, Edit, Delete
+const addUser = () => {
+    console.log("Adding User...")
+}
 const editUser = (id) => {
-    console.log(id)
+    console.log("Editing User...", id)
 }
 const deleteUser = (id) => {
-    console.log(id)
+    console.log("Deleting User...", id)
 }
 </script>
 
 <template>
     <div class="TableWrapper">
-        <!-- Search -->
-        <b-form-input
-            v-model="filter"
-            type="search"
-            placeholder="Type to Search"
-        />
+        <b-row>
+            <b-col cols="6">
+                <!-- Search -->
+                <b-form-input
+                    size="sm"
+                    type="search"
+                    placeholder="Buscar Usuarios"
+                    v-model="filter"
+                />
+            </b-col>
+            <b-col cols="6" class="text-right">
+                <!-- Add New User -->
+                <b-button variant="success" size="sm" @click="addUser">
+                    Agregar
+                </b-button>
+            </b-col>
+        </b-row>
+
         <!-- Table Items View -->
         <TableItems
             :items="users"
