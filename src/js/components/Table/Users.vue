@@ -88,6 +88,12 @@ const editUser = ({ id, email, fullname, password, role_id }) => {
     formAction.value = "edit"
     formUserModal.value.show()
 }
+const editPassword = (id) => {
+    // Setting formData
+    formData.password = null
+    formAction.value = "password"
+    formUserModal.value.show()
+}
 const deleteUser = (id) => {
     const FORM_DATA = new FormData()
     FORM_DATA.append("id", id)
@@ -102,12 +108,19 @@ const submitForm = (action) => {
         userStore.addUser(FORM_DATA)
     } else if (action == "edit") {
         userStore.editUser(FORM_DATA)
+    } else if (action == "password") {
+        userStore.editPassword(FORM_DATA)
     }
 }
 
 // Computed Getter
 const getFormAction = computed(() => {
-    return formAction.value === "add" ? "Agregar" : "Editar"
+    const ACTION = {
+        add: "Agregar Usuario",
+        edit: "Editar Usuario",
+        password: "Editar Contraseña",
+    }
+    return ACTION[formAction.value]
 })
 </script>
 
@@ -151,6 +164,14 @@ const getFormAction = computed(() => {
                     Editar
                 </b-button>
                 <b-button
+                    class="mr-2"
+                    variant="secondary"
+                    size="sm"
+                    @click="editPassword(item.id)"
+                >
+                    Editar Contraseña
+                </b-button>
+                <b-button
                     variant="danger"
                     size="sm"
                     @click="deleteUser(item.id)"
@@ -167,11 +188,11 @@ const getFormAction = computed(() => {
             aria-controls="my-table"
         />
         <!-- Modals -->
-        <b-modal ref="formUserModal" :title="getFormAction + ' Usuario'">
+        <b-modal ref="formUserModal" :title="getFormAction">
             <FormUser :form="formData" :type="formAction" />
             <template #modal-footer>
                 <b-button variant="primary" @click="submitForm(formAction)">
-                    {{ getFormAction }}
+                    Guardar Cambios
                 </b-button>
             </template>
         </b-modal>

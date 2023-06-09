@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
 import { useAuthStore } from "@store/auth"
+import { set } from "vue"
 
 // Defining State
 const state = () => ({
@@ -49,7 +50,22 @@ const actions = {
             .then((response) => {
                 console.log("response", response)
                 const index = this.users.findIndex((u) => u.id === response.id)
-                this.users = response
+                set(this.users, index, response)
+            })
+    },
+    async editPassword(user) {
+        const authStore = useAuthStore()
+        await fetch("http://backend-backup-patios.test/users/edit-password", {
+            headers: authStore.getHeaders,
+            method: "POST",
+            body: user,
+        })
+            .then((response) => response.json())
+            .catch((error) => console.error("Error:", error))
+            .then((response) => {
+                console.log("response", response)
+                const index = this.users.findIndex((u) => u.id === response.id)
+                set(this.users, index, response)
             })
     },
     async deleteUser(user) {
@@ -62,6 +78,7 @@ const actions = {
             .then((response) => {})
             .catch((error) => console.error("Error:", error))
             .then((response) => {
+                console.log("response", response)
                 const index = this.users.findIndex(
                     (el) => el.id == user.get("id")
                 )
