@@ -64,7 +64,7 @@ const deleteRole = (id) => {
                 <b-form-input
                     size="sm"
                     type="search"
-                    placeholder="Buscar Usuarios"
+                    placeholder="Buscar Roles"
                     v-model="filter"
                 />
             </b-col>

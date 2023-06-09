@@ -64,7 +64,7 @@ const deleteFolder = (id) => {
                 <b-form-input
                     size="sm"
                     type="search"
-                    placeholder="Buscar Usuarios"
+                    placeholder="Buscar Carpetas"
                     v-model="filter"
                 />
             </b-col>
