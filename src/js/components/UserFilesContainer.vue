@@ -25,16 +25,31 @@ const onFiltered = (filteredItems) => {
     totalRows.value = filteredItems.length
     currentPage.value = 1
 }
+
+const fs = ref(1)
+
+const options = [
+    { value: 1, text: "Carpeta I" },
+    { value: 2, text: "Carpeta II" },
+    { value: 3, text: "Carpeta III" },
+]
 </script>
 
 <template>
     <div class="TableUserFiles">
-        <!-- Search -->
-        <b-form-input
-            v-model="filter"
-            type="search"
-            placeholder="Type to Search"
-        />
+        <!-- Filter & Search -->
+        <b-row class="justify-content-between">
+            <b-col cols="5">
+                <b-form-input
+                    v-model="filter"
+                    type="search"
+                    placeholder="Buscar archivos..."
+                />
+            </b-col>
+            <b-col cols="5">
+                <b-form-select v-model="fs" :options="options" />
+            </b-col>
+        </b-row>
         <!-- Table Items View -->
         <TableItems
             :items="files"
@@ -59,6 +74,7 @@ const onFiltered = (filteredItems) => {
             :total-rows="totalRows"
             :per-page="perPage"
             aria-controls="my-table"
+            align="right"
         />
     </div>
 </template>

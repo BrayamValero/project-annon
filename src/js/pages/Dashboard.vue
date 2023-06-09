@@ -31,30 +31,45 @@ const getSelectedToggleName = computed(() => {
         <b-container class="my-5">
             <b-row class="justify-content-center">
                 <b-col cols="4">
-                    <h1>Google Drive</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Nihil, ullam?
+                    <h3 class="font-weight-bold">Backup Los Patios</h3>
+                    <p class="text-muted">
+                        Bienvenidos a la aplicación, acá podrás subir, editar y
+                        eliminar archivos los cuales se estarán guardando
+                        diréctamente en la nube.
                     </p>
-                    <FilepondUploadFiles />
+                    <FilepondUploadFiles class="mt-4" />
                 </b-col>
+
                 <b-col cols="8">
-                    <div class="d-flex justify-content-between mb-3">
-                        <div>
-                            <h1>{{ getSelectedToggleName }}</h1>
-                            <p>Lorem ipsum dolor sit.</p>
-                        </div>
-                        <!-- Toggle View -->
-                        <b-form-group v-slot="{ ariaDescribedby }" class="mb-4">
-                            <b-form-radio-group
-                                v-model="selectedView"
-                                :options="viewOptions"
-                                :aria-describedby="ariaDescribedby"
-                                name="view-option"
-                                buttons
-                            ></b-form-radio-group>
-                        </b-form-group>
-                    </div>
+                    <b-row class="align-items-center">
+                        <b-col cols="8">
+                            <h3 class="font-weight-bold">
+                                {{ getSelectedToggleName }}
+                            </h3>
+                            <p class="text-muted">
+                                Prueba cambiando entre las vistas disponibles,
+                                ya sea que quieras ver los archivos de las
+                                carpetas en una tabla o quieras verlos en
+                                miniaturas.
+                            </p>
+                        </b-col>
+                        <b-col cols="4" class="text-right">
+                            <!-- Toggle View -->
+                            <b-form-group
+                                v-slot="{ ariaDescribedby }"
+                                class="mb-4"
+                            >
+                                <b-form-radio-group
+                                    v-model="selectedView"
+                                    :options="viewOptions"
+                                    :aria-describedby="ariaDescribedby"
+                                    name="view-option"
+                                    buttons
+                                ></b-form-radio-group>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+
                     <!-- Main Table & Files view (With Search & Pagination)-->
                     <UserFilesContainer
                         :files="files"

@@ -90,7 +90,6 @@ const submitFiles = () => {
         <b-form-select
             v-model="filesData.folderId"
             :options="options"
-            size="sm"
             class="mb-3"
         />
         <file-pond
