@@ -38,7 +38,7 @@ const getSelectedToggleName = computed(() => {
                     </p>
                     <FilepondUploadFiles />
                 </b-col>
-                <b-col>
+                <b-col cols="8">
                     <div class="d-flex justify-content-between mb-3">
                         <div>
                             <h1>{{ getSelectedToggleName }}</h1>

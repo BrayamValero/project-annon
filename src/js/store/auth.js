@@ -5,7 +5,11 @@ const state = () => ({
     token: null,
 })
 
-const getters = {}
+const getters = {
+    getHeaders(state) {
+        return { Authorization: `Bearer ${state.token}` }
+    },
+}
 
 // Defining Actions
 const actions = {

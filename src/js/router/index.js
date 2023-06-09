@@ -5,6 +5,9 @@ import VueCookies from "vue-cookies"
 import Index from "@page/Index.vue"
 import Login from "@page/Login.vue"
 import Dashboard from "@page/Dashboard.vue"
+import Users from "@page/Users.vue"
+import Folders from "@page/Folders.vue"
+import Roles from "@page/Roles.vue"
 
 function authUser(to, from, next) {
     const JWT_TOKEN = VueCookies.get("jwt_token")
@@ -41,6 +44,24 @@ const routes = [
         path: "/dashboard",
         name: "Dashboard",
         component: Dashboard,
+        beforeEnter: authUser,
+    },
+    {
+        path: "/usuarios",
+        name: "Users",
+        component: Users,
+        beforeEnter: authUser,
+    },
+    {
+        path: "/carpetas",
+        name: "Folders",
+        component: Folders,
+        beforeEnter: authUser,
+    },
+    {
+        path: "/roles",
+        name: "Roles",
+        component: Roles,
         beforeEnter: authUser,
     },
 ]
