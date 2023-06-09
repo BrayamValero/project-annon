@@ -63,7 +63,7 @@ const dataFormat = {
     fullname: null,
     email: null,
     password: null,
-    role_id: null,
+    role_id: 1,
 }
 
 // [Cloning] => Cloning Object
@@ -127,24 +127,22 @@ const getFormAction = computed(() => {
 <template>
     <div class="TableWrapper">
         <b-row>
-            <b-col cols="6">
+            <b-col cols="4">
                 <!-- Search -->
-                <!-- <b-form-input
-                    size="sm"
+                <b-form-input
                     type="search"
                     placeholder="Buscar Usuarios"
                     v-model="filter"
                     autocomplete="off"
-                /> -->
+                />
             </b-col>
-            <b-col cols="6" class="text-right">
+            <b-col cols="8" class="text-right">
                 <!-- Add New User -->
-                <b-button variant="success" size="sm" @click="addUser">
+                <b-button variant="success" @click="addUser">
                     Agregar
                 </b-button>
             </b-col>
         </b-row>
-
         <!-- Table Items View -->
         <TableItems
             :items="users"
@@ -155,37 +153,37 @@ const getFormAction = computed(() => {
             :on-filtered="onFiltered"
         >
             <template #cell(index)="{ item, index }">
-                <b-button
-                    class="mr-2"
-                    variant="warning"
-                    size="sm"
-                    @click="editUser(item)"
-                >
-                    Editar
-                </b-button>
-                <b-button
-                    class="mr-2"
-                    variant="secondary"
-                    size="sm"
-                    @click="editPassword(item.id)"
-                >
-                    Editar Contraseña
-                </b-button>
-                <b-button
-                    variant="danger"
-                    size="sm"
-                    @click="deleteUser(item.id)"
-                >
-                    Eliminar
-                </b-button>
+                <div class="flex-btn-container">
+                    <b-button
+                        variant="warning"
+                        size="sm"
+                        @click="editUser(item)"
+                    >
+                        <i class="bi bi-pencil-fill"></i>
+                    </b-button>
+                    <b-button
+                        variant="primary"
+                        size="sm"
+                        @click="editPassword(item.id)"
+                    >
+                        <i class="bi bi-key-fill"></i>
+                    </b-button>
+                    <b-button
+                        variant="danger"
+                        size="sm"
+                        @click="deleteUser(item.id)"
+                    >
+                        <i class="bi bi-trash-fill"></i>
+                    </b-button>
+                </div>
             </template>
         </TableItems>
         <!-- Pagination -->
         <b-pagination
+            align="right"
             v-model="currentPage"
             :total-rows="totalRows"
             :per-page="perPage"
-            aria-controls="my-table"
         />
         <!-- Modals -->
         <b-modal ref="formUserModal" :title="getFormAction">

@@ -8,7 +8,7 @@ const { token } = storeToRefs(authStore)
 </script>
 
 <template>
-    <b-navbar toggleable="sm" type="dark" variant="info">
+    <b-navbar toggleable="sm" type="dark" variant="dark">
         <b-navbar-brand to="/">Logo</b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>

@@ -1,4 +1,9 @@
 // Custom.scss
 /* Bootstrap */
+$bootstrap-icons-font-src: url("@lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2")
+        format("woff2"),
+    url("@lib/bootstrap-icons/font/fonts/bootstrap-icons.woff") format("woff");
+
 @import "@lib/bootstrap/scss/bootstrap";
+@import "@lib/bootstrap-icons/font/bootstrap-icons.scss";
 @import "@lib/bootstrap-vue/dist/bootstrap-vue.css";
