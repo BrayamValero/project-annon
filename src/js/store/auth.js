@@ -2,13 +2,17 @@ import { defineStore } from "pinia"
 
 // Defining State
 const state = () => ({
-    userInfo: localStorage.getItem("jwt_token") || null,
+    token: null,
 })
 
 const getters = {}
 
 // Defining Actions
 const actions = {
+    loadStateFromCookie() {
+        const TOKEN = this.cookies.get("jwt_token")
+        if (TOKEN) this.token = TOKEN
+    },
     async login(user) {
         await fetch("http://backend-backup-patios.test/login", {
             method: "POST",
@@ -16,18 +20,21 @@ const actions = {
         })
             .then((res) => res.json())
             .catch((err) => console.log(err))
-            .then((res) => {
-                if (res.status === "200") {
-                    console.log("Success", res)
-                    this.userInfo = res.data
-                    localStorage.setItem("jwt_token", res.data)
+            .then(({ status, message, data }) => {
+                if (status === "200") {
+                    this.token = data
+                    this.cookies.set("jwt_token", data)
+                    this.router.push({ name: "Dashboard" })
                 } else {
                     console.log("Error", res)
                 }
             })
     },
     async logout() {
-        localStorage.removeItem("jwt_token")
+        // Replace with Cookies
+        this.cookies.remove("jwt_token")
+        this.token = null
+        this.router.push({ name: "Home" })
     },
 }
 
