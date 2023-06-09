@@ -1,11 +1,13 @@
 import VueRouter from "vue-router"
+import VueCookies from "vue-cookies"
+
 // Views Defined
 import Index from "@page/Index.vue"
 import Login from "@page/Login.vue"
 import Dashboard from "@page/Dashboard.vue"
 
 function authUser(to, from, next) {
-    const JWT_TOKEN = localStorage.getItem("jwt_token")
+    const JWT_TOKEN = VueCookies.get("jwt_token")
     if (!JWT_TOKEN) {
         return next({ name: "Login" })
     } else {
@@ -14,7 +16,7 @@ function authUser(to, from, next) {
 }
 
 function userLogged(to, from, next) {
-    const USER_LOGGED = localStorage.getItem("jwt_token")
+    const USER_LOGGED = VueCookies.get("jwt_token")
     if (USER_LOGGED) {
         return next({ name: "Dashboard" })
     } else {
@@ -27,6 +29,7 @@ const routes = [
         path: "/",
         name: "Home",
         component: Index,
+        beforeEnter: userLogged,
     },
     {
         path: "/login",

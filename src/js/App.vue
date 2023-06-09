@@ -1,5 +1,13 @@
 <script setup>
+import { onBeforeMount } from "vue"
+import { useAuthStore } from "@store/auth"
 import Navbar from "@component/Navbar.vue"
+
+// access the `store` variable anywhere in the component ✨
+const authStore = useAuthStore()
+
+// Load state from cookie before the App.vue loads
+onBeforeMount(() => authStore.loadStateFromCookie())
 </script>
 
 <template>
