@@ -2,13 +2,13 @@
 import { ref, onMounted } from "vue"
 import TableItems from "@component/TableItems.vue"
 
-// Adding User Store
+// Adding Role Store
 import { storeToRefs } from "pinia"
-import { useUserStore } from "@store/users"
+import { useRoleStore } from "@store/roles"
 
-// Accessing the User Store variables
-const userStore = useUserStore()
-const { users } = storeToRefs(userStore)
+// Accessing the Role Store variables
+const roleStore = useRoleStore()
+const { roles } = storeToRefs(roleStore)
 
 // Init Ref values
 const filter = ref("")
@@ -22,17 +22,7 @@ const fields = [
         sortable: true,
     },
     {
-        key: "fullname",
-        label: "Nombre y Apellido",
-        sortable: true,
-    },
-    {
-        key: "email",
-        label: "Correo Electronico",
-        sortable: true,
-    },
-    {
-        key: "role_id",
+        key: "name",
         label: "Rol",
         sortable: true,
     },
@@ -44,8 +34,8 @@ const fields = [
 
 // Getting Information Request & Total Rows
 onMounted(async () => {
-    await userStore.getUsers()
-    totalRows.value = users.value.length
+    await roleStore.getRoles()
+    totalRows.value = roles.value.length
 })
 
 // Detect Search Filter
@@ -55,14 +45,14 @@ const onFiltered = (filteredItems) => {
 }
 
 // Extra Methods => Add, Edit, Delete
-const addUser = () => {
-    console.log("Adding User...")
+const addRole = () => {
+    console.log("Adding Role...")
 }
-const editUser = (id) => {
-    console.log("Editing User...", id)
+const editRole = (id) => {
+    console.log("Editing Role...", id)
 }
-const deleteUser = (id) => {
-    console.log("Deleting User...", id)
+const deleteRole = (id) => {
+    console.log("Deleting Role...", id)
 }
 </script>
 
@@ -79,8 +69,8 @@ const deleteUser = (id) => {
                 />
             </b-col>
             <b-col cols="6" class="text-right">
-                <!-- Add New User -->
-                <b-button variant="success" size="sm" @click="addUser">
+                <!-- Add New Role -->
+                <b-button variant="success" size="sm" @click="addRole">
                     Agregar
                 </b-button>
             </b-col>
@@ -88,7 +78,7 @@ const deleteUser = (id) => {
 
         <!-- Table Items View -->
         <TableItems
-            :items="users"
+            :items="roles"
             :fields="fields"
             :per-page="perPage"
             :current-page="currentPage"
@@ -100,14 +90,14 @@ const deleteUser = (id) => {
                     class="mr-2"
                     variant="warning"
                     size="sm"
-                    @click="editUser(item)"
+                    @click="editRole(item)"
                 >
                     Editar
                 </b-button>
                 <b-button
                     variant="danger"
                     size="sm"
-                    @click="deleteUser(item.id)"
+                    @click="deleteRole(item.id)"
                 >
                     Suspender
                 </b-button>

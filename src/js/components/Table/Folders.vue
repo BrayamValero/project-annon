@@ -2,13 +2,13 @@
 import { ref, onMounted } from "vue"
 import TableItems from "@component/TableItems.vue"
 
-// Adding User Store
+// Adding Folder Store
 import { storeToRefs } from "pinia"
-import { useUserStore } from "@store/users"
+import { useFolderStore } from "@store/folders"
 
-// Accessing the User Store variables
-const userStore = useUserStore()
-const { users } = storeToRefs(userStore)
+// Accessing the Folder Store variables
+const folderStore = useFolderStore()
+const { folders } = storeToRefs(folderStore)
 
 // Init Ref values
 const filter = ref("")
@@ -22,18 +22,8 @@ const fields = [
         sortable: true,
     },
     {
-        key: "fullname",
-        label: "Nombre y Apellido",
-        sortable: true,
-    },
-    {
-        key: "email",
-        label: "Correo Electronico",
-        sortable: true,
-    },
-    {
-        key: "role_id",
-        label: "Rol",
+        key: "name",
+        label: "Nombre de Carpeta",
         sortable: true,
     },
     {
@@ -44,8 +34,8 @@ const fields = [
 
 // Getting Information Request & Total Rows
 onMounted(async () => {
-    await userStore.getUsers()
-    totalRows.value = users.value.length
+    await folderStore.getFolders()
+    totalRows.value = folders.value.length
 })
 
 // Detect Search Filter
@@ -55,14 +45,14 @@ const onFiltered = (filteredItems) => {
 }
 
 // Extra Methods => Add, Edit, Delete
-const addUser = () => {
-    console.log("Adding User...")
+const addFolder = () => {
+    console.log("Adding Folder...")
 }
-const editUser = (id) => {
-    console.log("Editing User...", id)
+const editFolder = (id) => {
+    console.log("Editing Folder...", id)
 }
-const deleteUser = (id) => {
-    console.log("Deleting User...", id)
+const deleteFolder = (id) => {
+    console.log("Deleting Folder...", id)
 }
 </script>
 
@@ -79,8 +69,8 @@ const deleteUser = (id) => {
                 />
             </b-col>
             <b-col cols="6" class="text-right">
-                <!-- Add New User -->
-                <b-button variant="success" size="sm" @click="addUser">
+                <!-- Add New Folder -->
+                <b-button variant="success" size="sm" @click="addFolder">
                     Agregar
                 </b-button>
             </b-col>
@@ -88,7 +78,7 @@ const deleteUser = (id) => {
 
         <!-- Table Items View -->
         <TableItems
-            :items="users"
+            :items="folders"
             :fields="fields"
             :per-page="perPage"
             :current-page="currentPage"
@@ -100,14 +90,14 @@ const deleteUser = (id) => {
                     class="mr-2"
                     variant="warning"
                     size="sm"
-                    @click="editUser(item)"
+                    @click="editFolder(item)"
                 >
                     Editar
                 </b-button>
                 <b-button
                     variant="danger"
                     size="sm"
-                    @click="deleteUser(item.id)"
+                    @click="deleteFolder(item.id)"
                 >
                     Suspender
                 </b-button>
