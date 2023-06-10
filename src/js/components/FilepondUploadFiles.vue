@@ -89,7 +89,6 @@ const submitFiles = () => {
 
 <template>
     <div class="FilepondUploadFiles">
-        <pre>{{ filesData }}</pre>
         <b-form-select
             v-model="filesData.folderId"
             :options="options"

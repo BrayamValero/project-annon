@@ -46,10 +46,8 @@ const actions = {
                 responseType: "blob",
                 params: { source: url_source },
             })
-            .then((response) => {
-                let fileURL = window.URL.createObjectURL(
-                    new Blob([response.data])
-                )
+            .then(({ data }) => {
+                let fileURL = window.URL.createObjectURL(new Blob([data]))
                 let link = document.createElement("a")
                 link.href = fileURL
                 link.setAttribute("download", `${name}.${type}`)
@@ -68,12 +66,30 @@ const actions = {
                 responseType: "blob",
                 params: { source: url_source },
             })
-            .then((response) => {
-                const blob = new Blob([response.data], {
-                    type: response.headers["content-type"],
+            .then(({ data, headers }) => {
+                const blob = new Blob([data], {
+                    type: headers["content-type"],
                 })
                 const fileURL = URL.createObjectURL(blob)
                 window.open(fileURL, "_blank")
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
+    async deleteFile(id) {
+        // Setting FormData
+        const FORM_DATA = new FormData()
+        FORM_DATA.append("id", id)
+
+        const authStore = useAuthStore()
+        axios
+            .post("files/delete", FORM_DATA, {
+                headers: authStore.getHeaders,
+            })
+            .then(() => {
+                const index = this.files.findIndex((el) => el.id == id)
+                this.files.splice(index, 1)
             })
             .catch((error) => {
                 console.log(error)

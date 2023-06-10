@@ -100,32 +100,26 @@ const options = [
             <template #cell(index)="{ item, index }">
                 <div class="flex-btn-container">
                     <b-button
-                        variant="warning"
-                        size="sm"
-                        @click="editUser(item)"
-                    >
-                        <i class="bi bi-pencil-fill"></i>
-                    </b-button>
-                    <b-button
                         variant="primary"
                         size="sm"
                         @click="fileStore.downloadFile(item)"
                     >
                         <i class="bi bi-download"></i>
                     </b-button>
+
                     <b-button
-                        variant="danger"
-                        size="sm"
-                        @click="deleteUser(item.id)"
-                    >
-                        <i class="bi bi-trash-fill"></i>
-                    </b-button>
-                    <b-button
-                        variant="secondary"
+                        variant="success"
                         size="sm"
                         @click="fileStore.viewFile(item)"
                     >
                         <i class="bi bi-eye"></i>
+                    </b-button>
+                    <b-button
+                        variant="danger"
+                        size="sm"
+                        @click="fileStore.deleteFile(item.id)"
+                    >
+                        <i class="bi bi-trash-fill"></i>
                     </b-button>
                 </div>
             </template>
