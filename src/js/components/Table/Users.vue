@@ -95,9 +95,7 @@ const editPassword = (id) => {
     formUserModal.value.show()
 }
 const deleteUser = (id) => {
-    const FORM_DATA = new FormData()
-    FORM_DATA.append("id", id)
-    userStore.deleteUser(FORM_DATA)
+    userStore.deleteUser(id)
 }
 
 // Submitting form

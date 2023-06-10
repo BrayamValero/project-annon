@@ -1,3 +1,4 @@
+import axios from "axios"
 import { defineStore } from "pinia"
 import { useAuthStore } from "@store/auth"
 import { set } from "vue"
@@ -14,75 +15,74 @@ const getters = {}
 const actions = {
     async getUsers() {
         const authStore = useAuthStore()
-        await fetch("http://backend-backup-patios.test/users", {
-            headers: authStore.getHeaders,
-            method: "GET",
-        })
-            .then((response) => response.json())
-            .catch((error) => console.error("Error:", error))
-            .then((response) => {
-                this.users = response
+        axios
+            .get("users", {
+                headers: authStore.getHeaders,
+            })
+            .then(({ data }) => {
+                this.users = data
+            })
+            .catch((error) => {
+                console.log(error)
             })
     },
     async addUser(user) {
         const authStore = useAuthStore()
-        await fetch("http://backend-backup-patios.test/users", {
-            headers: authStore.getHeaders,
-            method: "POST",
-            body: user,
-        })
-            .then((response) => response.json())
-            .catch((error) => console.error("Error:", error))
-            .then((response) => {
-                console.log("response", response)
-                this.users.push(response)
+        axios
+            .post("users", user, {
+                headers: authStore.getHeaders,
+            })
+            .then(({ data }) => {
+                this.users.push(data)
+            })
+            .catch((error) => {
+                console.log(error)
             })
     },
     async editUser(user) {
         const authStore = useAuthStore()
-        await fetch("http://backend-backup-patios.test/users/edit", {
-            headers: authStore.getHeaders,
-            method: "POST",
-            body: user,
-        })
-            .then((response) => response.json())
-            .catch((error) => console.error("Error:", error))
-            .then((response) => {
-                console.log("response", response)
-                const index = this.users.findIndex((u) => u.id === response.id)
-                set(this.users, index, response)
+        axios
+            .post("users/edit", user, {
+                headers: authStore.getHeaders,
+            })
+            .then(({ data }) => {
+                const index = this.users.findIndex((u) => u.id === data.id)
+                set(this.users, index, data)
+            })
+            .catch((error) => {
+                console.log(error)
             })
     },
     async editPassword(user) {
         const authStore = useAuthStore()
-        await fetch("http://backend-backup-patios.test/users/edit-password", {
-            headers: authStore.getHeaders,
-            method: "POST",
-            body: user,
-        })
-            .then((response) => response.json())
-            .catch((error) => console.error("Error:", error))
-            .then((response) => {
-                console.log("response", response)
-                const index = this.users.findIndex((u) => u.id === response.id)
-                set(this.users, index, response)
+        axios
+            .post("users/edit-password", user, {
+                headers: authStore.getHeaders,
+            })
+            .then(({ data }) => {
+                const index = this.users.findIndex((u) => u.id === data.id)
+                set(this.users, index, data)
+            })
+            .catch((error) => {
+                console.log(error)
             })
     },
-    async deleteUser(user) {
+    async deleteUser(id) {
+        // Setting FormData
+        const FORM_DATA = new FormData()
+        FORM_DATA.append("id", id)
+
         const authStore = useAuthStore()
-        await fetch("http://backend-backup-patios.test/users/delete", {
-            headers: authStore.getHeaders,
-            method: "POST",
-            body: user,
-        })
-            .then((response) => {})
-            .catch((error) => console.error("Error:", error))
-            .then((response) => {
-                console.log("response", response)
-                const index = this.users.findIndex(
-                    (el) => el.id == user.get("id")
-                )
+        axios
+            .post("users/delete", FORM_DATA, {
+                headers: authStore.getHeaders,
+            })
+            .then(() => {
+                const index = this.users.findIndex((el) => el.id == id)
                 this.users.splice(index, 1)
+            })
+            .catch((error) => {
+                console.log(error)
             })
     },
 }
