@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted, computed } from "vue"
+import { ref, reactive, computed, onMounted } from "vue"
 import TableItems from "@component/TableItems.vue"
 import FormUser from "@component/Form/User.vue"
 

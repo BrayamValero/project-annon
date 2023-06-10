@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, reactive, computed, onMounted } from "vue"
 import TableItems from "@component/TableItems.vue"
+import FormFolder from "@component/Form/Folder.vue"
 
 // Adding Folder Store
 import { storeToRefs } from "pinia"
@@ -44,16 +45,57 @@ const onFiltered = (filteredItems) => {
     currentPage.value = 1
 }
 
+const formFolderModal = ref(0)
+
+// Defining Data Format
+const dataFormat = {
+    id: null,
+    name: null,
+}
+
+// [Cloning] => Cloning Object
+const formData = reactive({ ...dataFormat })
+const formAction = ref(null)
+
 // Extra Methods => Add, Edit, Delete
 const addFolder = () => {
-    console.log("Adding Folder...")
+    // Setting formData
+    Object.assign(formData, dataFormat)
+    // Opening Modal
+    formAction.value = "add"
+    formFolderModal.value.show()
 }
-const editFolder = (id) => {
-    console.log("Editing Folder...", id)
+const editFolder = ({ id, name }) => {
+    // Setting formData
+    formData.id = id
+    formData.name = name
+    // Opening Modal
+    formAction.value = "edit"
+    formFolderModal.value.show()
 }
 const deleteFolder = (id) => {
-    console.log("Deleting Folder...", id)
+    folderStore.deleteFolder(id)
 }
+
+// Submitting form
+const submitForm = (action) => {
+    const FORM_DATA = new FormData()
+    Object.entries(formData).forEach(([key, val]) => FORM_DATA.append(key, val))
+    if (action === "add") {
+        folderStore.addFolder(FORM_DATA)
+    } else if (action == "edit") {
+        folderStore.editFolder(FORM_DATA)
+    }
+}
+
+// Computed Getter
+const getFormAction = computed(() => {
+    const ACTION = {
+        add: "Agregar Carpeta",
+        edit: "Editar Carpeta",
+    }
+    return ACTION[formAction.value]
+})
 </script>
 
 <template>
@@ -91,14 +133,14 @@ const deleteFolder = (id) => {
                     size="sm"
                     @click="editFolder(item)"
                 >
-                    Editar
+                    <i class="bi bi-pencil-fill"></i>
                 </b-button>
                 <b-button
                     variant="danger"
                     size="sm"
                     @click="deleteFolder(item.id)"
                 >
-                    Suspender
+                    <i class="bi bi-trash-fill"></i>
                 </b-button>
             </template>
         </TableItems>
@@ -109,5 +151,14 @@ const deleteFolder = (id) => {
             :per-page="perPage"
             align="right"
         />
+        <!-- Modals -->
+        <b-modal ref="formFolderModal" :title="getFormAction">
+            <FormFolder :form="formData" />
+            <template #modal-footer>
+                <b-button variant="primary" @click="submitForm(formAction)">
+                    Guardar Cambios
+                </b-button>
+            </template>
+        </b-modal>
     </div>
 </template>
