@@ -8,7 +8,7 @@ import TableFolders from "@component/Table/Folders.vue"
             <b-row class="justify-content-center">
                 <b-col cols="10" class="text-center">
                     <h3 class="font-weight-bold">Carpetas</h3>
-                    <p>
+                    <p class="text-muted">
                         Acá podrás ver la lista de carpetas disponibles dentro
                         de la plataforma, no pueden ser eliminadas.
                     </p>

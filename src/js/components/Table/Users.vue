@@ -178,10 +178,10 @@ const getFormAction = computed(() => {
         </TableItems>
         <!-- Pagination -->
         <b-pagination
-            align="right"
             v-model="currentPage"
             :total-rows="totalRows"
             :per-page="perPage"
+            align="right"
         />
         <!-- Modals -->
         <b-modal ref="formUserModal" :title="getFormAction">

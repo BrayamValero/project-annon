@@ -62,7 +62,6 @@ const deleteFolder = (id) => {
             <b-col cols="6">
                 <!-- Search -->
                 <b-form-input
-                    size="sm"
                     type="search"
                     placeholder="Buscar Carpetas"
                     v-model="filter"
@@ -108,7 +107,7 @@ const deleteFolder = (id) => {
             v-model="currentPage"
             :total-rows="totalRows"
             :per-page="perPage"
-            aria-controls="my-table"
+            align="right"
         />
     </div>
 </template>

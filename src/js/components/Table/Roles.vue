@@ -26,10 +26,6 @@ const fields = [
         label: "Rol",
         sortable: true,
     },
-    {
-        key: "index",
-        label: "Opciones",
-    },
 ]
 
 // Getting Information Request & Total Rows
@@ -43,39 +39,20 @@ const onFiltered = (filteredItems) => {
     totalRows.value = filteredItems.length
     currentPage.value = 1
 }
-
-// Extra Methods => Add, Edit, Delete
-const addRole = () => {
-    console.log("Adding Role...")
-}
-const editRole = (id) => {
-    console.log("Editing Role...", id)
-}
-const deleteRole = (id) => {
-    console.log("Deleting Role...", id)
-}
 </script>
 
 <template>
     <div class="TableWrapper">
         <b-row>
-            <b-col cols="6">
+            <b-col cols="12">
                 <!-- Search -->
                 <b-form-input
-                    size="sm"
                     type="search"
                     placeholder="Buscar Roles"
                     v-model="filter"
                 />
             </b-col>
-            <b-col cols="6" class="text-right">
-                <!-- Add New Role -->
-                <b-button variant="success" size="sm" @click="addRole">
-                    Agregar
-                </b-button>
-            </b-col>
         </b-row>
-
         <!-- Table Items View -->
         <TableItems
             :items="roles"
@@ -84,31 +61,13 @@ const deleteRole = (id) => {
             :current-page="currentPage"
             :filter="filter"
             :on-filtered="onFiltered"
-        >
-            <template #cell(index)="{ item }">
-                <b-button
-                    class="mr-2"
-                    variant="warning"
-                    size="sm"
-                    @click="editRole(item)"
-                >
-                    Editar
-                </b-button>
-                <b-button
-                    variant="danger"
-                    size="sm"
-                    @click="deleteRole(item.id)"
-                >
-                    Suspender
-                </b-button>
-            </template>
-        </TableItems>
+        />
         <!-- Pagination -->
         <b-pagination
             v-model="currentPage"
             :total-rows="totalRows"
             :per-page="perPage"
-            aria-controls="my-table"
+            align="right"
         />
     </div>
 </template>
