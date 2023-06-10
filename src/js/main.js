@@ -6,6 +6,10 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue"
 import App from "./App.vue"
 import router from "@router/index"
 
+// Importing Axios
+import axios from "/js/axios.js"
+import VueAxios from "vue-axios"
+
 // Import Bootstrap & Bootstrap Vue CSS & SCSS
 import "@/scss/main.scss"
 
@@ -16,6 +20,7 @@ pinia.use(({ store }) => {
 })
 
 // Make BootstrapVue available throughout your project, optionally install the BootstrapVue icon components plugin
+Vue.use(VueAxios, axios)
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)

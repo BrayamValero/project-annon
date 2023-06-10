@@ -3,6 +3,12 @@ import { ref, onMounted } from "vue"
 import TableItems from "@component/TableItems.vue"
 import FileItems from "@component/FileItems.vue"
 
+// Adding Folder Store
+import { useFileStore } from "@store/files"
+
+// Accessing the Folder Store variables
+const fileStore = useFileStore()
+
 // Defining Props
 const props = defineProps({
     files: Array,
@@ -14,6 +20,37 @@ const filter = ref("")
 const totalRows = ref(null)
 const perPage = ref(5)
 const currentPage = ref(1)
+const fields = [
+    {
+        key: "id",
+        label: "#",
+        sortable: true,
+    },
+    {
+        key: "name",
+        label: "Nombre",
+        sortable: true,
+    },
+    {
+        key: "type",
+        label: "Tipo",
+        sortable: true,
+    },
+    {
+        key: "url_source",
+        label: "URL",
+        sortable: true,
+    },
+    {
+        key: "size",
+        label: "Tamaño",
+        sortable: true,
+    },
+    {
+        key: "index",
+        label: "Opciones",
+    },
+]
 
 onMounted(() => {
     totalRows.value = props.files.length
@@ -52,13 +89,47 @@ const options = [
         </b-row>
         <!-- Table Items View -->
         <TableItems
+            :fields="fields"
             :items="files"
             :per-page="perPage"
             :current-page="currentPage"
             :filter="filter"
             :on-filtered="onFiltered"
             v-if="selectedView === 'table'"
-        />
+        >
+            <template #cell(index)="{ item, index }">
+                <div class="flex-btn-container">
+                    <b-button
+                        variant="warning"
+                        size="sm"
+                        @click="editUser(item)"
+                    >
+                        <i class="bi bi-pencil-fill"></i>
+                    </b-button>
+                    <b-button
+                        variant="primary"
+                        size="sm"
+                        @click="fileStore.downloadFile(item)"
+                    >
+                        <i class="bi bi-download"></i>
+                    </b-button>
+                    <b-button
+                        variant="danger"
+                        size="sm"
+                        @click="deleteUser(item.id)"
+                    >
+                        <i class="bi bi-trash-fill"></i>
+                    </b-button>
+                    <b-button
+                        variant="secondary"
+                        size="sm"
+                        @click="fileStore.viewFile(item)"
+                    >
+                        <i class="bi bi-eye"></i>
+                    </b-button>
+                </div>
+            </template>
+        </TableItems>
         <!-- File Items View -->
         <FileItems
             :items="files"

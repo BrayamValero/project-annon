@@ -77,8 +77,10 @@ const submitFiles = () => {
     FORM_DATA.append("folderId", folderId)
 
     Object.entries(files).forEach(([key, val]) => {
-        const { file, name } = val
+        const { file, name, type } = val
         FORM_DATA.append("files[]", file, name)
+        // Append all file types
+        FORM_DATA.append("fileTypes[]", type)
     })
 
     fileStore.addFiles(FORM_DATA)
@@ -87,6 +89,7 @@ const submitFiles = () => {
 
 <template>
     <div class="FilepondUploadFiles">
+        <pre>{{ filesData }}</pre>
         <b-form-select
             v-model="filesData.folderId"
             :options="options"
@@ -98,7 +101,7 @@ const submitFiles = () => {
             class-name="FilepondUploadFiles-file"
             label-idle="Arrastra los archivos aqui"
             allow-multiple="true"
-            accepted-file-types="image/jpeg, image/png"
+            :accepted-file-types="null"
             :files="files"
             @addfile="handleFilePondAddFile"
             @removefile="handleFilePondRemoveFile"
