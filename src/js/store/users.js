@@ -1,7 +1,7 @@
 import axios from "axios"
+import { set } from "vue"
 import { defineStore } from "pinia"
 import { useAuthStore } from "@store/auth"
-import { set } from "vue"
 
 // Defining State
 const state = () => ({
@@ -46,7 +46,7 @@ const actions = {
                 headers: authStore.getHeaders,
             })
             .then(({ data }) => {
-                const index = this.users.findIndex((u) => u.id === data.id)
+                const index = this.users.findIndex((el) => el.id === data.id)
                 set(this.users, index, data)
             })
             .catch((error) => {
@@ -60,7 +60,7 @@ const actions = {
                 headers: authStore.getHeaders,
             })
             .then(({ data }) => {
-                const index = this.users.findIndex((u) => u.id === data.id)
+                const index = this.users.findIndex((el) => el.id === data.id)
                 set(this.users, index, data)
             })
             .catch((error) => {
