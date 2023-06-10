@@ -1,4 +1,10 @@
 <script setup>
+// Adding Folder Store
+import { useFileStore } from "@store/files"
+
+// Accessing the Folder Store variables
+const fileStore = useFileStore()
+
 // Defining Props
 const props = defineProps({
     file: Object,
@@ -12,26 +18,36 @@ const props = defineProps({
             <div class="File-name">
                 {{ file.name }}
             </div>
-            <div class="File-format">Formato {{ file.file_type }}</div>
-            <div class="File-size">
-                {{ file.weight }}
+            <b-badge variant="secondary" class="d-block my-1">
+                Formato {{ file.type.toUpperCase() }}
+            </b-badge>
+            <div class="File-format"></div>
+            <div class="File-size">{{ file.size }} KB</div>
+            <div class="flex-btn-container mt-2">
+                <b-button
+                    variant="primary"
+                    size="sm"
+                    @click="fileStore.downloadFile(file)"
+                >
+                    <i class="bi bi-download"></i>
+                </b-button>
+
+                <b-button
+                    variant="success"
+                    size="sm"
+                    @click="fileStore.viewFile(file)"
+                >
+                    <i class="bi bi-eye"></i>
+                </b-button>
+                <b-button
+                    variant="danger"
+                    size="sm"
+                    @click="fileStore.deleteFile(file.id)"
+                >
+                    <i class="bi bi-trash-fill"></i>
+                </b-button>
             </div>
         </div>
-        <!-- Dropdown Options -->
-        <b-dropdown
-            size="sm"
-            variant="link"
-            class="File-options"
-            toggle-class="File-options-btn"
-            no-caret
-            right
-        >
-            <template #button-content>
-                <b-icon class="File-options-icon" icon="three-dots-vertical" />
-            </template>
-            <b-dropdown-item href="#">Eliminar</b-dropdown-item>
-            <b-dropdown-item href="#">Editar</b-dropdown-item>
-        </b-dropdown>
     </div>
 </template>
 
@@ -46,6 +62,7 @@ const props = defineProps({
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        height: 100%;
     }
     &-options {
         position: absolute;
@@ -57,13 +74,21 @@ const props = defineProps({
         margin-bottom: 0.5rem;
     }
     &-name {
+        text-align: center;
         font-weight: bold;
         font-size: 14px;
+        // Line Clamp
+        display: -webkit-box;
+        max-width: 200px;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     &-format {
         font-size: 12px;
     }
     &-size {
+        color: gray;
         font-size: 12px;
     }
 }

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, onMounted, computed, watch } from "vue"
 import TableItems from "@component/TableItems.vue"
 import FileItems from "@component/FileItems.vue"
 
@@ -18,7 +18,7 @@ const props = defineProps({
 // Init Ref values
 const filter = ref("")
 const totalRows = ref(null)
-const perPage = ref(5)
+const perPage = ref(6)
 const currentPage = ref(1)
 const fields = [
     {
@@ -37,8 +37,8 @@ const fields = [
         sortable: true,
     },
     {
-        key: "url_source",
-        label: "URL",
+        key: "folder_id",
+        label: "Carpeta",
         sortable: true,
     },
     {
@@ -52,23 +52,35 @@ const fields = [
     },
 ]
 
-onMounted(() => {
-    totalRows.value = props.files.length
+// Folder Selected
+const filterSelected = ref(null)
+
+const getFilteredFiles = computed(() => {
+    const filteredItems = filterSelected.value
+        ? props.files.filter((file) => file.folder_id === filterSelected.value)
+        : props.files
+
+    totalRows.value = filteredItems.length
+    return filteredItems
 })
 
 // Detect Search Filter
 const onFiltered = (filteredItems) => {
-    // Trigger pagination to update the number of buttons/pages due to filtering
     totalRows.value = filteredItems.length
     currentPage.value = 1
 }
 
-const fs = ref(1)
+watch(
+    () => props.files,
+    () => {
+        totalRows.value = getFilteredFiles.value.length
+    }
+)
 
 const options = [
-    { value: 1, text: "Carpeta I" },
-    { value: 2, text: "Carpeta II" },
-    { value: 3, text: "Carpeta III" },
+    { value: null, text: "Todos los archivos" },
+    { value: 1, text: "OVERALL_FOLDER" },
+    { value: 2, text: "BACKUP_FOLDER" },
 ]
 </script>
 
@@ -84,13 +96,13 @@ const options = [
                 />
             </b-col>
             <b-col cols="5">
-                <b-form-select v-model="fs" :options="options" />
+                <b-form-select v-model="filterSelected" :options="options" />
             </b-col>
         </b-row>
         <!-- Table Items View -->
         <TableItems
+            :items="getFilteredFiles"
             :fields="fields"
-            :items="files"
             :per-page="perPage"
             :current-page="currentPage"
             :filter="filter"
@@ -126,7 +138,7 @@ const options = [
         </TableItems>
         <!-- File Items View -->
         <FileItems
-            :items="files"
+            :items="getFilteredFiles"
             :per-page="perPage"
             :current-page="currentPage"
             :filter="filter"

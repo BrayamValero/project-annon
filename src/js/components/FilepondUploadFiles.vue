@@ -63,10 +63,8 @@ const handleFilePondRemoveFile = (err, file) => {
 }
 
 const options = [
-    { value: null, text: "Selecciona una carpeta" },
-    { value: 1, text: "Carpeta I" },
-    { value: 2, text: "Carpeta II" },
-    { value: 3, text: "Carpeta III" },
+    { value: 1, text: "OVERALL_FOLDER" },
+    { value: 2, text: "BACKUP_FOLDER" },
 ]
 
 const submitFiles = () => {
