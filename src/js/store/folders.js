@@ -1,7 +1,6 @@
 import axios from "axios"
 import { set } from "vue"
 import { defineStore } from "pinia"
-import { useAuthStore } from "@store/auth"
 
 // Defining State
 const state = () => ({
@@ -28,11 +27,8 @@ const getters = {
 // Defining Actions
 const actions = {
     async getFolders() {
-        const authStore = useAuthStore()
         axios
-            .get("folders", {
-                headers: authStore.getHeaders,
-            })
+            .get("folders")
             .then(({ data }) => {
                 this.folders = data
             })
@@ -41,11 +37,8 @@ const actions = {
             })
     },
     async addFolder(folder) {
-        const authStore = useAuthStore()
         axios
-            .post("folders", folder, {
-                headers: authStore.getHeaders,
-            })
+            .post("folders", folder)
             .then(({ data }) => {
                 this.folders.push(data)
             })
@@ -54,11 +47,8 @@ const actions = {
             })
     },
     async editFolder(folder) {
-        const authStore = useAuthStore()
         axios
-            .post("folders/edit", folder, {
-                headers: authStore.getHeaders,
-            })
+            .post("folders/edit", folder)
             .then(({ data }) => {
                 const index = this.folders.findIndex((el) => el.id === data.id)
                 set(this.folders, index, data)
@@ -72,11 +62,8 @@ const actions = {
         const FORM_DATA = new FormData()
         FORM_DATA.append("id", id)
 
-        const authStore = useAuthStore()
         axios
-            .post("folders/delete", FORM_DATA, {
-                headers: authStore.getHeaders,
-            })
+            .post("folders/delete", FORM_DATA)
             .then(() => {
                 const index = this.folders.findIndex((el) => el.id == id)
                 this.folders.splice(index, 1)

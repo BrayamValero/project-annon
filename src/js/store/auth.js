@@ -43,6 +43,8 @@ const actions = {
             })
     },
     async logout() {
+        // Setting Default Headers
+        axios.defaults.headers.common = null
         // Replace with Cookies
         this.cookies.remove("token")
         this.token = null

@@ -1,7 +1,6 @@
 import axios from "axios"
 import { set } from "vue"
 import { defineStore } from "pinia"
-import { useAuthStore } from "@store/auth"
 
 // Defining State
 const state = () => ({
@@ -14,11 +13,8 @@ const getters = {}
 // Defining Actions
 const actions = {
     async getUsers() {
-        const authStore = useAuthStore()
         axios
-            .get("users", {
-                headers: authStore.getHeaders,
-            })
+            .get("users")
             .then(({ data }) => {
                 this.users = data
             })
@@ -27,11 +23,8 @@ const actions = {
             })
     },
     async addUser(user) {
-        const authStore = useAuthStore()
         axios
-            .post("users", user, {
-                headers: authStore.getHeaders,
-            })
+            .post("users", user)
             .then(({ data }) => {
                 this.users.push(data)
             })
@@ -40,11 +33,8 @@ const actions = {
             })
     },
     async editUser(user) {
-        const authStore = useAuthStore()
         axios
-            .post("users/edit", user, {
-                headers: authStore.getHeaders,
-            })
+            .post("users/edit", user)
             .then(({ data }) => {
                 const index = this.users.findIndex((el) => el.id === data.id)
                 set(this.users, index, data)
@@ -54,11 +44,8 @@ const actions = {
             })
     },
     async editPassword(user) {
-        const authStore = useAuthStore()
         axios
-            .post("users/edit-password", user, {
-                headers: authStore.getHeaders,
-            })
+            .post("users/edit-password", user)
             .then(({ data }) => {
                 const index = this.users.findIndex((el) => el.id === data.id)
                 set(this.users, index, data)
@@ -72,11 +59,8 @@ const actions = {
         const FORM_DATA = new FormData()
         FORM_DATA.append("id", id)
 
-        const authStore = useAuthStore()
         axios
-            .post("users/delete", FORM_DATA, {
-                headers: authStore.getHeaders,
-            })
+            .post("users/delete", FORM_DATA)
             .then(() => {
                 const index = this.users.findIndex((el) => el.id == id)
                 this.users.splice(index, 1)
