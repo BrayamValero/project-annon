@@ -80,8 +80,7 @@ const submitFiles = () => {
         // Append all file types
         FORM_DATA.append("fileTypes[]", type)
     })
-
-    fileStore.addFiles(FORM_DATA)
+    if (files.length > 0) fileStore.addFiles(FORM_DATA)
 }
 </script>
 

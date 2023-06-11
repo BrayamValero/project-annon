@@ -1,5 +1,6 @@
 import axios from "axios"
 import { defineStore } from "pinia"
+import { useVerifyForm } from "@composable"
 
 // Defining State
 const state = () => ({
@@ -29,25 +30,24 @@ const actions = {
         }
     },
     async login(user) {
-        await fetch("http://backend-backup-patios.test/login", {
-            method: "POST",
-            body: user,
-        })
-            .then((res) => res.json())
-            .catch((err) => console.log(err))
-            .then(({ status, message, data }) => {
-                if (status === "200") {
-                    // Setting Default Headers
-                    axios.defaults.headers.common = {
-                        Authorization: `Bearer ${data}`,
-                    }
-                    // Setting Token Data, Cookies and redirecting
-                    this.token = data
-                    this.cookies.set("token", data, "1d")
-                    this.router.push({ name: "Dashboard" })
-                } else {
-                    console.log("Error", message)
+        // First, veryfy FormData inputs
+        if (!useVerifyForm(user)) return
+
+        axios
+            .post("login", user)
+            .then(({ data: { data } }) => {
+                // Setting Default Headers
+                axios.defaults.headers.common = {
+                    Authorization: `Bearer ${data}`,
                 }
+                // Setting Token Data, Cookies and redirecting
+                this.token = data
+                this.cookies.set("token", data, "1d")
+                this.router.push({ name: "Dashboard" })
+            })
+            .catch((error) => {
+                const message = error.response.data.message
+                alert(message)
             })
     },
     async logout() {
