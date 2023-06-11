@@ -35,7 +35,6 @@ const fields = [
 
 // Getting Information Request & Total Rows
 onMounted(async () => {
-    await folderStore.getFolders()
     totalRows.value = folders.value.length
 })
 

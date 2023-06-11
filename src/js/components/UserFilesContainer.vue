@@ -1,13 +1,18 @@
 <script setup>
-import { ref, onMounted, computed, watch } from "vue"
+import { storeToRefs } from "pinia"
+import { ref, computed, watch } from "vue"
 import TableItems from "@component/TableItems.vue"
 import FileItems from "@component/FileItems.vue"
 
 // Adding Folder Store
 import { useFileStore } from "@store/files"
+import { useFolderStore } from "@store/folders"
 
 // Accessing the Folder Store variables
 const fileStore = useFileStore()
+const folderStore = useFolderStore()
+
+const { getSortingOptions } = storeToRefs(folderStore)
 
 // Defining Props
 const props = defineProps({
@@ -76,12 +81,6 @@ watch(
         totalRows.value = getFilteredFiles.value.length
     }
 )
-
-const options = [
-    { value: null, text: "Todos los archivos" },
-    { value: 1, text: "OVERALL_FOLDER" },
-    { value: 2, text: "BACKUP_FOLDER" },
-]
 </script>
 
 <template>
@@ -96,7 +95,10 @@ const options = [
                 />
             </b-col>
             <b-col cols="5">
-                <b-form-select v-model="filterSelected" :options="options" />
+                <b-form-select
+                    v-model="filterSelected"
+                    :options="getSortingOptions"
+                />
             </b-col>
         </b-row>
         <!-- Table Items View -->

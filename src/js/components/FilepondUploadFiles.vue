@@ -1,9 +1,14 @@
 <script setup>
+import { storeToRefs } from "pinia"
 import { ref, reactive } from "vue"
 import { useFileStore } from "@store/files"
+import { useFolderStore } from "@store/folders"
 
 // access the `store` variable anywhere in the component ✨
 const fileStore = useFileStore()
+const folderStore = useFolderStore()
+
+const { getFolderOptions } = storeToRefs(folderStore)
 
 defineProps({
     title: String,
@@ -62,11 +67,6 @@ const handleFilePondRemoveFile = (err, file) => {
     }
 }
 
-const options = [
-    { value: 1, text: "OVERALL_FOLDER" },
-    { value: 2, text: "BACKUP_FOLDER" },
-]
-
 const submitFiles = () => {
     const { userId, folderId, files } = filesData
     const FORM_DATA = new FormData()
@@ -89,7 +89,7 @@ const submitFiles = () => {
     <div class="FilepondUploadFiles">
         <b-form-select
             v-model="filesData.folderId"
-            :options="options"
+            :options="getFolderOptions"
             class="mb-3"
         />
         <file-pond

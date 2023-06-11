@@ -9,7 +9,21 @@ const state = () => ({
 })
 
 // Defining Getters
-const getters = {}
+const getters = {
+    getFolderOptions(state) {
+        return state.folders.map((folder) => ({
+            value: folder.id,
+            text: folder.name,
+        }))
+    },
+    getSortingOptions(state) {
+        const allFolders = state.folders.map((folder) => ({
+            value: folder.id,
+            text: folder.name,
+        }))
+        return [{ value: null, text: "Todos los archivos" }, ...allFolders]
+    },
+}
 
 // Defining Actions
 const actions = {
