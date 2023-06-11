@@ -20,6 +20,8 @@ const actions = {
         const TOKEN = this.cookies.get("token")
 
         if (TOKEN) {
+            // Renew Expiration Time, setting token state and defining axios headers.
+            this.cookies.set("token", data, "1d")
             this.token = TOKEN
             axios.defaults.headers.common = {
                 Authorization: `Bearer ${TOKEN}`,
@@ -41,7 +43,7 @@ const actions = {
                     }
                     // Setting Token Data, Cookies and redirecting
                     this.token = data
-                    this.cookies.set("token", data, "30s")
+                    this.cookies.set("token", data, "1d")
                     this.router.push({ name: "Dashboard" })
                 } else {
                     console.log("Error", message)
