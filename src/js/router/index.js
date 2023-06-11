@@ -10,8 +10,8 @@ import Folders from "@page/Folders.vue"
 import Roles from "@page/Roles.vue"
 
 function authUser(to, from, next) {
-    const JWT_TOKEN = VueCookies.get("jwt_token")
-    if (!JWT_TOKEN) {
+    const TOKEN = VueCookies.get("token")
+    if (!TOKEN) {
         return next({ name: "Login" })
     } else {
         return next()
@@ -19,7 +19,7 @@ function authUser(to, from, next) {
 }
 
 function userLogged(to, from, next) {
-    const USER_LOGGED = VueCookies.get("jwt_token")
+    const USER_LOGGED = VueCookies.get("token")
     if (USER_LOGGED) {
         return next({ name: "Dashboard" })
     } else {

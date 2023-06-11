@@ -16,7 +16,7 @@ const getters = {
 // Defining Actions
 const actions = {
     loadStateFromCookie() {
-        const TOKEN = this.cookies.get("jwt_token")
+        const TOKEN = this.cookies.get("token")
         if (TOKEN) this.token = TOKEN
     },
     async login(user) {
@@ -29,7 +29,7 @@ const actions = {
             .then(({ status, message, data }) => {
                 if (status === "200") {
                     this.token = data
-                    this.cookies.set("jwt_token", data, "1m")
+                    this.cookies.set("token", data, "1m")
                     this.router.push({ name: "Dashboard" })
                 } else {
                     console.log("Error", message)
@@ -38,7 +38,7 @@ const actions = {
     },
     async logout() {
         // Replace with Cookies
-        this.cookies.remove("jwt_token")
+        this.cookies.remove("token")
         this.token = null
         this.router.push({ name: "Home" })
     },
