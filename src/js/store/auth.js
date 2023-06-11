@@ -21,7 +21,7 @@ const actions = {
 
         if (TOKEN) {
             // Renew Expiration Time, setting token state and defining axios headers.
-            this.cookies.set("token", data, "1d")
+            this.cookies.set("token", TOKEN, "1d")
             this.token = TOKEN
             axios.defaults.headers.common = {
                 Authorization: `Bearer ${TOKEN}`,

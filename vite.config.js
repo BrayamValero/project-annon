@@ -13,6 +13,7 @@ export default defineConfig({
             "@store": path.resolve(__dirname, "./src/js/store"),
             "@page": path.resolve(__dirname, "./src/js/pages"),
             "@router": path.resolve(__dirname, "./src/js/router"),
+            "@composable": path.resolve(__dirname, "./src/js/composables"),
         },
     },
     server: {
