@@ -30,6 +30,7 @@ const actions = {
         }
     },
     async login(user) {
+        if (!useVerifyForm(user)) return
         axios
             .post("login", user)
             .then(({ data: response }) => {
