@@ -100,14 +100,12 @@ const deleteUser = (id) => {
 
 // Submitting form
 const submitForm = (action) => {
-    const FORM_DATA = new FormData()
-    Object.entries(formData).forEach(([key, val]) => FORM_DATA.append(key, val))
     if (action === "add") {
-        userStore.addUser(FORM_DATA)
+        userStore.addUser(formData)
     } else if (action == "edit") {
-        userStore.editUser(FORM_DATA)
+        userStore.editUser(formData)
     } else if (action == "password") {
-        userStore.editPassword(FORM_DATA)
+        userStore.editPassword(formData)
     }
 }
 

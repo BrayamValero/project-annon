@@ -35,6 +35,7 @@ const fields = [
 
 // Getting Information Request & Total Rows
 onMounted(async () => {
+    await folderStore.getFolders()
     totalRows.value = folders.value.length
 })
 
@@ -78,12 +79,10 @@ const deleteFolder = (id) => {
 
 // Submitting form
 const submitForm = (action) => {
-    const FORM_DATA = new FormData()
-    Object.entries(formData).forEach(([key, val]) => FORM_DATA.append(key, val))
     if (action === "add") {
-        folderStore.addFolder(FORM_DATA)
+        folderStore.addFolder(formData)
     } else if (action == "edit") {
-        folderStore.editFolder(FORM_DATA)
+        folderStore.editFolder(formData)
     }
 }
 

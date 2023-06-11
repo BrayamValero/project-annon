@@ -67,12 +67,8 @@ const actions = {
             })
     },
     async deleteFile(id) {
-        // Setting FormData
-        const FORM_DATA = new FormData()
-        FORM_DATA.append("id", id)
-
         axios
-            .post("files/delete", FORM_DATA)
+            .post("files/delete", { id })
             .then(() => {
                 const index = this.files.findIndex((el) => el.id == id)
                 this.files.splice(index, 1)

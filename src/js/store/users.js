@@ -55,12 +55,8 @@ const actions = {
             })
     },
     async deleteUser(id) {
-        // Setting FormData
-        const FORM_DATA = new FormData()
-        FORM_DATA.append("id", id)
-
         axios
-            .post("users/delete", FORM_DATA)
+            .post("users/delete", { id })
             .then(() => {
                 const index = this.users.findIndex((el) => el.id == id)
                 this.users.splice(index, 1)

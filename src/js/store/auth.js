@@ -30,9 +30,6 @@ const actions = {
         }
     },
     async login(user) {
-        // First, veryfy FormData inputs
-        if (!useVerifyForm(user)) return
-
         axios
             .post("login", user)
             .then(({ data: { data } }) => {

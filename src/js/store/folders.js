@@ -58,12 +58,8 @@ const actions = {
             })
     },
     async deleteFolder(id) {
-        // Setting FormData
-        const FORM_DATA = new FormData()
-        FORM_DATA.append("id", id)
-
         axios
-            .post("folders/delete", FORM_DATA)
+            .post("folders/delete", { id })
             .then(() => {
                 const index = this.folders.findIndex((el) => el.id == id)
                 this.folders.splice(index, 1)
