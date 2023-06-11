@@ -29,7 +29,7 @@ const actions = {
             .then(({ status, message, data }) => {
                 if (status === "200") {
                     this.token = data
-                    this.cookies.set("jwt_token", data)
+                    this.cookies.set("jwt_token", data, "1m")
                     this.router.push({ name: "Dashboard" })
                 } else {
                     console.log("Error", message)

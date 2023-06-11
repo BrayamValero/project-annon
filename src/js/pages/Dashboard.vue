@@ -1,6 +1,7 @@
 <script setup>
 import { storeToRefs } from "pinia"
 import { useFileStore } from "@store/files"
+import { useFolderStore } from "@store/folders"
 import { ref, computed, onBeforeMount } from "vue"
 
 import UserFilesContainer from "@component/UserFilesContainer.vue"
@@ -8,6 +9,7 @@ import FilepondUploadFiles from "@component/FilepondUploadFiles.vue"
 
 // access the `store` variable anywhere in the component ✨
 const fileStore = useFileStore()
+const folderStore = useFolderStore()
 const { files } = storeToRefs(fileStore)
 
 const selectedView = ref("table")
@@ -17,7 +19,8 @@ const viewOptions = ref([
 ])
 
 // [Fetch] => Getting Files
-onBeforeMount(() => {
+onBeforeMount(async () => {
+    folderStore.getFolders()
     fileStore.getFiles()
 })
 
