@@ -7,9 +7,7 @@ import Navbar from "@component/Navbar.vue"
 const authStore = useAuthStore()
 
 // Load state from cookie before the App.vue loads
-onBeforeMount(async () => {
-    await authStore.loadStateFromCookie()
-})
+onBeforeMount(() => authStore.setToken())
 </script>
 
 <template>

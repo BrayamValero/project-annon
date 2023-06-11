@@ -16,9 +16,15 @@ const getters = {
 
 // Defining Actions
 const actions = {
-    loadStateFromCookie() {
+    setToken() {
         const TOKEN = this.cookies.get("token")
-        if (TOKEN) this.token = TOKEN
+
+        if (TOKEN) {
+            this.token = TOKEN
+            axios.defaults.headers.common = {
+                Authorization: `Bearer ${TOKEN}`,
+            }
+        }
     },
     async login(user) {
         await fetch("http://backend-backup-patios.test/login", {
