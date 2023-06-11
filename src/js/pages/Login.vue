@@ -15,13 +15,7 @@ const dataFormat = {
 const userData = reactive({ ...dataFormat })
 
 const submitForm = () => {
-    const { email, password } = userData
-
-    const FORM_DATA = new FormData()
-    FORM_DATA.append("email", email)
-    FORM_DATA.append("password", password)
-
-    authStore.login(FORM_DATA)
+    authStore.login(userData)
 }
 </script>
 
