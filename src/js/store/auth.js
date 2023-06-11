@@ -1,3 +1,4 @@
+import axios from "axios"
 import { defineStore } from "pinia"
 
 // Defining State
@@ -28,8 +29,13 @@ const actions = {
             .catch((err) => console.log(err))
             .then(({ status, message, data }) => {
                 if (status === "200") {
+                    // Setting Default Headers
+                    axios.defaults.headers.common = {
+                        Authorization: `Bearer ${data}`,
+                    }
+                    // Setting Token Data, Cookies and redirecting
                     this.token = data
-                    this.cookies.set("token", data, "1m")
+                    this.cookies.set("token", data, "30s")
                     this.router.push({ name: "Dashboard" })
                 } else {
                     console.log("Error", message)
