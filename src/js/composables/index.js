@@ -1,16 +1,14 @@
 export const useVerifyForm = (obj) => {
-    for (let key in obj) {
+    for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
             const value = obj[key]
-            if (
-                value === null ||
-                value === "" ||
-                (typeof value === "string" && value.trim() === "")
-            ) {
-                alert("Por favor, llena todos los campos")
+
+            if (value === null || value.trim() === "") {
+                alert("Verifica los campos")
                 return false
             }
         }
     }
+
     return true
 }
