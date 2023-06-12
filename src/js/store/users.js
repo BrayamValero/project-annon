@@ -1,6 +1,7 @@
 import axios from "axios"
 import { set } from "vue"
 import { defineStore } from "pinia"
+import { useVerifyForm } from "@composable"
 
 // Defining State
 const state = () => ({
@@ -23,6 +24,7 @@ const actions = {
             })
     },
     async addUser(user) {
+        if (!useVerifyForm(user)) return
         axios
             .post("users", user)
             .then(({ data }) => {
@@ -33,6 +35,7 @@ const actions = {
             })
     },
     async editUser(user) {
+        if (!useVerifyForm(user)) return
         axios
             .post("users/edit", user)
             .then(({ data }) => {
@@ -44,6 +47,7 @@ const actions = {
             })
     },
     async editPassword(user) {
+        if (!useVerifyForm(user)) return
         axios
             .post("users/edit-password", user)
             .then(({ data }) => {

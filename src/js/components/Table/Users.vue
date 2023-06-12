@@ -74,11 +74,15 @@ const formAction = ref(null)
 const addUser = () => {
     // Setting formData
     Object.assign(formData, dataFormat)
+    // Delete unused key
+    delete formData.id
     // Opening Modal
     formAction.value = "add"
     formUserModal.value.show()
 }
 const editUser = ({ id, email, fullname, password, role_id }) => {
+    // Delete unused key
+    delete formData.password
     // Setting formData
     formData.id = id
     formData.email = email
@@ -88,13 +92,18 @@ const editUser = ({ id, email, fullname, password, role_id }) => {
     formAction.value = "edit"
     formUserModal.value.show()
 }
-const editPassword = (id) => {
+const editPassword = ({ id }) => {
+    // Delete unused key
+    delete formData.email
+    delete formData.fullname
+    delete formData.role_id
     // Setting formData
+    formData.id = id
     formData.password = null
     formAction.value = "password"
     formUserModal.value.show()
 }
-const deleteUser = (id) => {
+const deleteUser = ({ id }) => {
     userStore.deleteUser(id)
 }
 
@@ -160,14 +169,14 @@ const getFormAction = computed(() => {
                     <b-button
                         variant="primary"
                         size="sm"
-                        @click="editPassword(item.id)"
+                        @click="editPassword(item)"
                     >
                         <i class="bi bi-key-fill"></i>
                     </b-button>
                     <b-button
                         variant="danger"
                         size="sm"
-                        @click="deleteUser(item.id)"
+                        @click="deleteUser(item)"
                     >
                         <i class="bi bi-trash-fill"></i>
                     </b-button>

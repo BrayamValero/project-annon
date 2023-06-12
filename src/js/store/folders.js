@@ -1,6 +1,7 @@
 import axios from "axios"
 import { set } from "vue"
 import { defineStore } from "pinia"
+import { useVerifyForm } from "@composable"
 
 // Defining State
 const state = () => ({
@@ -37,6 +38,7 @@ const actions = {
             })
     },
     async addFolder(folder) {
+        if (!useVerifyForm(folder)) return
         axios
             .post("folders", folder)
             .then(({ data }) => {
@@ -47,6 +49,7 @@ const actions = {
             })
     },
     async editFolder(folder) {
+        if (!useVerifyForm(folder)) return
         axios
             .post("folders/edit", folder)
             .then(({ data }) => {

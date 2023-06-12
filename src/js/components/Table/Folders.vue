@@ -61,6 +61,8 @@ const formAction = ref(null)
 const addFolder = () => {
     // Setting formData
     Object.assign(formData, dataFormat)
+    // Delete unused key
+    delete formData.id
     // Opening Modal
     formAction.value = "add"
     formFolderModal.value.show()
