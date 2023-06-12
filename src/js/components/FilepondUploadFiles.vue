@@ -33,6 +33,9 @@ const FilePond = vueFilePond(
     FilePondPluginImagePreview
 )
 
+// Defining FilePond Template Ref
+const filepondFiles = ref(0)
+
 const files = ref([])
 
 // Defining Data Format
@@ -80,7 +83,15 @@ const submitFiles = () => {
         // Append all file types
         FORM_DATA.append("fileTypes[]", type)
     })
-    if (files.length > 0) fileStore.addFiles(FORM_DATA)
+    if (files.length > 0) {
+        fileStore.addFiles(FORM_DATA).then((success) => {
+            if (success) {
+                // Resetting Data & Removing Filepond Preview Files
+                Object.assign(filesData, dataFormat)
+                filepondFiles.value.removeFile()
+            }
+        })
+    }
 }
 </script>
 
@@ -92,7 +103,7 @@ const submitFiles = () => {
             class="mb-3"
         />
         <file-pond
-            ref="pond"
+            ref="filepondFiles"
             name="files"
             class-name="FilepondUploadFiles-file"
             label-idle="Arrastra los archivos aqui"

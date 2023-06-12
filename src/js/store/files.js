@@ -22,13 +22,15 @@ const actions = {
             })
     },
     async addFiles(files) {
-        axios
+        return axios
             .post("files", files)
             .then(({ data }) => {
                 data.forEach((file) => this.files.push(file))
+                return true
             })
             .catch((error) => {
                 console.log(error)
+                return false
             })
     },
     async downloadFile({ name, url_source, type }) {
