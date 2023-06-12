@@ -32,14 +32,14 @@ const actions = {
     async login(user) {
         axios
             .post("login", user)
-            .then(({ data: response }) => {
+            .then(({ data: { data } }) => {
                 // Setting Default Headers
                 axios.defaults.headers.common = {
-                    Authorization: `Bearer ${response.data}`,
+                    Authorization: `Bearer ${data}`,
                 }
                 // Setting Token Data, Cookies and redirecting
-                this.token = response.data
-                this.cookies.set("token", response.data, "1d")
+                this.token = data
+                this.cookies.set("token", data, "1d")
                 this.router.push({ name: "Dashboard" })
             })
             .catch((error) => {
