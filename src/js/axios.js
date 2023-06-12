@@ -1,4 +1,9 @@
 import axios from "axios"
-axios.defaults.baseURL = "http://backend-backup-patios.test/"
+
+// Localhost
+// axios.defaults.baseURL = "http://backend-backup-patios.test/"
+
+// Webhosting
+axios.defaults.baseURL = "https://backuplospatios.com/api/"
 
 export default axios
