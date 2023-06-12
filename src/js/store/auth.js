@@ -31,30 +31,23 @@ const actions = {
     },
     async login(user) {
         if (!useVerifyForm(user)) return
-        // Feat: Setting User FormData
-        const FORM_DATA = new FormData()
-        FORM_DATA.append("email", user.email)
-        FORM_DATA.append("password", user.password)
 
-        await fetch("http://backend-backup-patios.test/login", {
-            method: "POST",
-            body: FORM_DATA,
-        })
-            .then((res) => res.json())
-            .catch((err) => console.log(err))
-            .then(({ data, status }) => {
-                if (status === "200") {
-                    // Setting Default Headers
-                    axios.defaults.headers.common = {
-                        Authorization: `Bearer ${data}`,
-                    }
-                    // Setting Token Data, Cookies and redirecting
-                    this.token = data
-                    this.cookies.set("token", data, "1d")
-                    this.router.push({ name: "Dashboard" })
-                } else {
-                    alert("Error, intenta nuevamente")
+        const formData = new FormData()
+        formData.append("email", user.email)
+        formData.append("password", user.password)
+
+        axios
+            .post("login", formData)
+            .then(({ data }) => {
+                axios.defaults.headers.common = {
+                    Authorization: `Bearer ${data["data"]}`,
                 }
+                this.token = data["data"]
+                this.cookies.set("token", data["data"], "1d")
+                this.router.push({ name: "Dashboard" })
+            })
+            .catch((error) => {
+                console.log(error)
             })
     },
     async logout() {
