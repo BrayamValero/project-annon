@@ -11,6 +11,9 @@ const getters = {}
 
 // Defining Actions
 const actions = {
+    getRoleName(id) {
+        return this.roles.find((role) => role.id === id).name
+    },
     async getRoles() {
         axios
             .get("roles")

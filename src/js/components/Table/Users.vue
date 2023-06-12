@@ -6,9 +6,11 @@ import FormUser from "@component/Form/User.vue"
 // Adding User Store
 import { storeToRefs } from "pinia"
 import { useUserStore } from "@store/users"
+import { useRoleStore } from "@store/roles"
 
 // Accessing the User Store variables
 const userStore = useUserStore()
+const roleStore = useRoleStore()
 const { users } = storeToRefs(userStore)
 
 // Init Ref values
@@ -45,6 +47,7 @@ const fields = [
 
 // Getting Information Request & Total Rows
 onMounted(async () => {
+    await roleStore.getRoles()
     await userStore.getUsers()
     totalRows.value = users.value.length
 })
@@ -157,7 +160,10 @@ const getFormAction = computed(() => {
             :filter="filter"
             :on-filtered="onFiltered"
         >
-            <template #cell(index)="{ item, index }">
+            <template #cell(role_id)="{ item }">
+                {{ roleStore.getRoleName(item.role_id) }}
+            </template>
+            <template #cell(index)="{ item }">
                 <div class="flex-btn-container">
                     <b-button
                         variant="warning"

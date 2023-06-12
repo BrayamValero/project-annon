@@ -27,6 +27,9 @@ const getters = {
 
 // Defining Actions
 const actions = {
+    getFolderName(id) {
+        return this.folders.find((folder) => folder.id === id).name
+    },
     async getFolders() {
         axios
             .get("folders")

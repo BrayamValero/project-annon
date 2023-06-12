@@ -111,7 +111,10 @@ watch(
             :on-filtered="onFiltered"
             v-if="selectedView === 'table'"
         >
-            <template #cell(index)="{ item, index }">
+            <template #cell(folder_id)="{ item }">
+                {{ folderStore.getFolderName(item.folder_id) }}
+            </template>
+            <template #cell(index)="{ item }">
                 <div class="flex-btn-container">
                     <b-button
                         variant="primary"
