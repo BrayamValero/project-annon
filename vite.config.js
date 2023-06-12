@@ -4,7 +4,6 @@ import path from "path"
 
 export default defineConfig({
     plugins: [vue()],
-    root: path.resolve(__dirname, "src"),
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./src"),

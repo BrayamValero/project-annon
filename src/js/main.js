@@ -7,7 +7,7 @@ import App from "./App.vue"
 import router from "@router/index"
 
 // Importing Axios
-import axios from "/js/axios.js"
+import axios from "../js/axios"
 import VueAxios from "vue-axios"
 
 // Import Bootstrap & Bootstrap Vue CSS & SCSS
