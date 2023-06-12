@@ -7,8 +7,8 @@ const authStore = useAuthStore()
 
 // Defining Data Format
 const dataFormat = {
-    email: "admin@example.com",
-    password: "123456",
+    email: null,
+    password: null,
 }
 
 // [Cloning] => Cloning Object
