@@ -1,0 +1,12 @@
+// Importing Bootstrap Utilities To Overwrite Colors
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+// Overwritting & Adding Extra Colors
+$custom-colors: (
+    "brand": #ea0027,
+);
+
+// Merging New Colors
+$theme-colors: map-merge($theme-colors, $custom-colors);

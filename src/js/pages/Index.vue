@@ -5,6 +5,9 @@
                 <b-col cols="12">
                     <h1>Homepage</h1>
                     <p>Bienvenido a la App</p>
+                    <!-- Comparacion -->
+                    <b-button variant="brand"> Hello </b-button>
+                    <button class="btn btn-brand">Hello</button>
                 </b-col>
             </b-row>
         </b-container>
