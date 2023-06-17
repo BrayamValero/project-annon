@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, onMounted } from "vue"
+import { ref, reactive, computed, onMounted, watch } from "vue"
 import TableItems from "@component/TableItems.vue"
 import FormUser from "@component/Form/User.vue"
 
@@ -49,7 +49,6 @@ const fields = [
 onMounted(async () => {
     await roleStore.getRoles()
     await userStore.getUsers()
-    totalRows.value = users.value.length
 })
 
 // Detect Search Filter
@@ -120,9 +119,8 @@ const submitForm = (action) => {
     } else if (action == "password") {
         isSuccess = userStore.editPassword(formData)
     }
-    if (isSuccess) {
-        formUserModal.value.hide()
-    }
+    // Hide Modal
+    if (isSuccess) formUserModal.value.hide()
 }
 
 // Computed Getter
@@ -133,6 +131,10 @@ const getFormAction = computed(() => {
         password: "Editar Contraseña",
     }
     return ACTION[formAction.value]
+})
+
+watch(users, () => {
+    totalRows.value = users.value.length
 })
 </script>
 

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, onMounted, watch } from "vue"
 import TableItems from "@component/TableItems.vue"
 
 // Adding Role Store
@@ -31,7 +31,6 @@ const fields = [
 // Getting Information Request & Total Rows
 onMounted(async () => {
     await roleStore.getRoles()
-    totalRows.value = roles.value.length
 })
 
 // Detect Search Filter
@@ -39,6 +38,10 @@ const onFiltered = (filteredItems) => {
     totalRows.value = filteredItems.length
     currentPage.value = 1
 }
+
+watch(roles, () => {
+    totalRows.value = roles.value.length
+})
 </script>
 
 <template>

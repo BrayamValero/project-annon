@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, onMounted } from "vue"
+import { ref, reactive, computed, onMounted, watch } from "vue"
 import TableItems from "@component/TableItems.vue"
 import FormFolder from "@component/Form/Folder.vue"
 
@@ -36,7 +36,6 @@ const fields = [
 // Getting Information Request & Total Rows
 onMounted(async () => {
     await folderStore.getFolders()
-    totalRows.value = folders.value.length
 })
 
 // Detect Search Filter
@@ -81,11 +80,14 @@ const deleteFolder = (id) => {
 
 // Submitting form
 const submitForm = (action) => {
+    let isSuccess
     if (action === "add") {
-        folderStore.addFolder(formData)
+        isSuccess = folderStore.addFolder(formData)
     } else if (action == "edit") {
-        folderStore.editFolder(formData)
+        isSuccess = folderStore.editFolder(formData)
     }
+    // Hide Modal
+    if (isSuccess) formFolderModal.value.hide()
 }
 
 // Computed Getter
@@ -95,6 +97,10 @@ const getFormAction = computed(() => {
         edit: "Editar Carpeta",
     }
     return ACTION[formAction.value]
+})
+
+watch(folders, () => {
+    totalRows.value = folders.value.length
 })
 </script>
 

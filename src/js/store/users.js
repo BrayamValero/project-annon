@@ -1,8 +1,7 @@
 import axios from "axios"
 import { set } from "vue"
 import { defineStore } from "pinia"
-import { useVerifyForm } from "@composable"
-import { useSwal } from "@composable"
+import { useVerifyForm, useSwal } from "@composable"
 
 // Defining State
 const state = () => ({

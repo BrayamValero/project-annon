@@ -1,7 +1,7 @@
 import axios from "axios"
 import { set } from "vue"
 import { defineStore } from "pinia"
-import { useVerifyForm } from "@composable"
+import { useVerifyForm, useSwal } from "@composable"
 
 // Defining State
 const state = () => ({
@@ -42,37 +42,53 @@ const actions = {
     },
     async addFolder(folder) {
         if (!useVerifyForm(folder)) return
-        axios
+        return axios
             .post("folders", folder)
             .then(({ data }) => {
                 this.folders.push(data)
+                return true
             })
             .catch((error) => {
                 console.log(error)
+                return false
             })
     },
     async editFolder(folder) {
         if (!useVerifyForm(folder)) return
-        axios
+        return axios
             .post("folders/edit", folder)
             .then(({ data }) => {
                 const index = this.folders.findIndex((el) => el.id === data.id)
                 set(this.folders, index, data)
+                return true
             })
             .catch((error) => {
                 console.log(error)
+                return false
             })
     },
     async deleteFolder(id) {
-        axios
-            .post("folders/delete", { id })
-            .then(() => {
-                const index = this.folders.findIndex((el) => el.id == id)
-                this.folders.splice(index, 1)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        // Sweet Alerts: Delete Prompt
+        const { isConfirmed } = await useSwal({
+            icon: "warning",
+            title: "¿Estas seguro?",
+            text: "Si eliminas esta carpeta, todos los archivos asociados a dicha carpeta se eliminarán.",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+        })
+        // Axios: Wrapping confirmation inside prompt response
+        if (isConfirmed) {
+            axios
+                .post("folders/delete", { id })
+                .then(() => {
+                    const index = this.folders.findIndex((el) => el.id == id)
+                    this.folders.splice(index, 1)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
     },
 }
 
