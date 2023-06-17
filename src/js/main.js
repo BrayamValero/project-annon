@@ -5,6 +5,7 @@ import { createPinia } from "pinia"
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue"
 import App from "./App.vue"
 import router from "@router/index"
+import { useDecodeJWT } from "@composable"
 
 // Importing Axios
 import axios from "../js/axios"
@@ -17,6 +18,23 @@ const pinia = createPinia()
 pinia.use(({ store }) => {
     store.router = markRaw(router)
     store.cookies = VueCookies
+})
+
+// Register the directive
+Vue.directive("ability", {
+    inserted(el, binding, vnode) {
+        const { value: ability } = binding
+        const { role_name: role } = useDecodeJWT(VueCookies.get("token"))
+        const ABILITIES = {
+            "add-user": ["admin"],
+            "edit-user": ["admin"],
+            "edit-password": ["admin"],
+            "delete-user": ["admin"],
+        }
+        if (!ABILITIES[ability].includes(role)) {
+            el.parentElement.removeChild(el)
+        }
+    },
 })
 
 // Make BootstrapVue available throughout your project, optionally install the BootstrapVue icon components plugin

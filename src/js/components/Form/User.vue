@@ -1,7 +1,20 @@
 <script setup>
+import { onMounted } from "vue"
+
+// Adding Role Store
+import { useRoleStore } from "@store/roles"
+
+// Accessing the Role Store variables
+const roleStore = useRoleStore()
+
 defineProps({
     form: Object,
     type: String,
+})
+
+// Getting Information Request & Total Rows
+onMounted(async () => {
+    await roleStore.getRoles()
 })
 </script>
 
@@ -39,11 +52,7 @@ defineProps({
         <b-form-group label="Rol" v-if="type !== 'password'">
             <b-form-select
                 v-model="form.role_id"
-                :options="[
-                    { value: null, text: 'Selecciona' },
-                    { value: 1, text: 'Admin' },
-                    { value: 2, text: 'Moderator' },
-                ]"
+                :options="roleStore.getRoleOptions"
                 required
             ></b-form-select>
         </b-form-group>

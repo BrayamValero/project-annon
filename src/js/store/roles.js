@@ -7,7 +7,14 @@ const state = () => ({
 })
 
 // Defining Getters
-const getters = {}
+const getters = {
+    getRoleOptions(state) {
+        return state.roles.map(({ id, name }) => ({
+            value: id,
+            text: name,
+        }))
+    },
+}
 
 // Defining Actions
 const actions = {

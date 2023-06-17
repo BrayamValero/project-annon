@@ -6,6 +6,7 @@ import FormUser from "@component/Form/User.vue"
 // Adding User Store
 import { storeToRefs } from "pinia"
 import { useUserStore } from "@store/users"
+import { useAuthStore } from "@store/auth" // checkAbilities
 
 // Accessing the User Store variables
 const userStore = useUserStore()
@@ -149,7 +150,11 @@ watch(users, () => {
             </b-col>
             <b-col cols="8" class="text-right">
                 <!-- Add New User -->
-                <b-button variant="success" @click="addUser">
+                <b-button
+                    variant="success"
+                    @click="addUser"
+                    v-ability="'add-user'"
+                >
                     Agregar
                 </b-button>
             </b-col>
@@ -169,6 +174,7 @@ watch(users, () => {
                         variant="warning"
                         size="sm"
                         @click="editUser(item)"
+                        v-ability="'edit-user'"
                     >
                         <i class="bi bi-pencil-fill"></i>
                     </b-button>
@@ -176,6 +182,7 @@ watch(users, () => {
                         variant="primary"
                         size="sm"
                         @click="editPassword(item)"
+                        v-ability="'edit-password'"
                     >
                         <i class="bi bi-key-fill"></i>
                     </b-button>
@@ -183,6 +190,7 @@ watch(users, () => {
                         variant="danger"
                         size="sm"
                         @click="deleteUser(item)"
+                        v-ability="'delete-user'"
                     >
                         <i class="bi bi-trash-fill"></i>
                     </b-button>
