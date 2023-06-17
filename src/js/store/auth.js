@@ -30,7 +30,7 @@ const actions = {
         }
     },
     async login(user) {
-        if (!useVerifyForm(user)) return
+        if (!useVerifyForm(user)) return false
 
         const formData = new FormData()
         formData.append("email", user.email)

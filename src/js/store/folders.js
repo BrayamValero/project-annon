@@ -41,7 +41,7 @@ const actions = {
             })
     },
     async addFolder(folder) {
-        if (!useVerifyForm(folder)) return
+        if (!useVerifyForm(folder)) return false
         return axios
             .post("folders", folder)
             .then(({ data }) => {
@@ -54,7 +54,7 @@ const actions = {
             })
     },
     async editFolder(folder) {
-        if (!useVerifyForm(folder)) return
+        if (!useVerifyForm(folder)) return false
         return axios
             .post("folders/edit", folder)
             .then(({ data }) => {

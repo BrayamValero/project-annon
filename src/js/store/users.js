@@ -24,7 +24,7 @@ const actions = {
             })
     },
     async addUser(user) {
-        if (!useVerifyForm(user)) return
+        if (!useVerifyForm(user)) return false
         return axios
             .post("users", user)
             .then(({ data }) => {
@@ -37,7 +37,7 @@ const actions = {
             })
     },
     async editUser(user) {
-        if (!useVerifyForm(user)) return
+        if (!useVerifyForm(user)) return false
         return axios
             .post("users/edit", user)
             .then(({ data }) => {
@@ -51,8 +51,7 @@ const actions = {
             })
     },
     async editPassword(user) {
-        if (!useVerifyForm(user)) return
-
+        if (!useVerifyForm(user)) return false
         return axios
             .post("users/edit-password", user)
             .then(({ data }) => {

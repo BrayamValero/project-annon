@@ -110,14 +110,14 @@ const deleteUser = ({ id }) => {
 }
 
 // Submitting form
-const submitForm = (action) => {
+const submitForm = async (action) => {
     let isSuccess
     if (action === "add") {
-        isSuccess = userStore.addUser(formData)
+        isSuccess = await userStore.addUser(formData)
     } else if (action == "edit") {
-        isSuccess = userStore.editUser(formData)
+        isSuccess = await userStore.editUser(formData)
     } else if (action == "password") {
-        isSuccess = userStore.editPassword(formData)
+        isSuccess = await userStore.editPassword(formData)
     }
     // Hide Modal
     if (isSuccess) formUserModal.value.hide()

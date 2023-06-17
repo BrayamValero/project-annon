@@ -10,7 +10,11 @@ export const useVerifyForm = (obj) => {
                 value === "" ||
                 (typeof value === "string" && value.trim() === "")
             ) {
-                alert("Por favor, llena todos los campos")
+                Swal.fire(
+                    "Whoops!",
+                    "Por favor, llena todos los campos",
+                    "warning"
+                )
                 return false
             }
         }

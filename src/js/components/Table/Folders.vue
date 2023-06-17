@@ -79,12 +79,12 @@ const deleteFolder = (id) => {
 }
 
 // Submitting form
-const submitForm = (action) => {
+const submitForm = async (action) => {
     let isSuccess
     if (action === "add") {
-        isSuccess = folderStore.addFolder(formData)
+        isSuccess = await folderStore.addFolder(formData)
     } else if (action == "edit") {
-        isSuccess = folderStore.editFolder(formData)
+        isSuccess = await folderStore.editFolder(formData)
     }
     // Hide Modal
     if (isSuccess) formFolderModal.value.hide()
