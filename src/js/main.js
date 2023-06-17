@@ -5,7 +5,7 @@ import { createPinia } from "pinia"
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue"
 import App from "./App.vue"
 import router from "@router/index"
-import { useDecodeJWT } from "@composable"
+import { useDecodeJWT, useAbilities } from "@composable"
 
 // Importing Axios
 import axios from "../js/axios"
@@ -25,13 +25,7 @@ Vue.directive("ability", {
     inserted(el, binding, vnode) {
         const { value: ability } = binding
         const { role_name: role } = useDecodeJWT(VueCookies.get("token"))
-        const ABILITIES = {
-            "add-user": ["admin"],
-            "edit-user": ["admin"],
-            "edit-password": ["admin"],
-            "delete-user": ["admin"],
-        }
-        if (!ABILITIES[ability].includes(role)) {
+        if (!useAbilities[ability].includes(role)) {
             el.parentElement.removeChild(el)
         }
     },

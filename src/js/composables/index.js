@@ -2,6 +2,13 @@
 import Swal from "sweetalert2"
 import jwt_decode from "jwt-decode"
 
+export const useAbilities = {
+    "add-user": ["admin"],
+    "edit-user": ["admin"],
+    "edit-password": ["admin"],
+    "delete-user": ["admin"],
+}
+
 export const useVerifyForm = (obj) => {
     for (let key in obj) {
         if (obj.hasOwnProperty(key)) {
