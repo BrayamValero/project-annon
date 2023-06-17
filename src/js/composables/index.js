@@ -2,19 +2,23 @@
 import Swal from "sweetalert2"
 import jwt_decode from "jwt-decode"
 
+const ADMIN = import.meta.env.VITE_ADMIN_NAME
+const MODERATOR = import.meta.env.VITE_MODERATOR_NAME
+const GUEST = import.meta.env.VITE_GUEST_NAME
+
 export const useAbilities = {
     // Users
-    "add-user": ["admin"],
-    "edit-user": ["admin"],
-    "edit-password": ["admin"],
-    "delete-user": ["admin"],
+    "add-user": [ADMIN, MODERATOR],
+    "edit-user": [ADMIN, MODERATOR],
+    "edit-password": [ADMIN],
+    "delete-user": [ADMIN],
     // Folders
-    "add-folder": ["admin"],
-    "edit-folder": ["admin"],
-    "delete-folder": ["admin"],
+    "add-folder": [ADMIN, MODERATOR],
+    "edit-folder": [ADMIN, MODERATOR],
+    "delete-folder": [ADMIN],
     // Files
-    "upload-file": ["admin"],
-    "delete-file": ["admin"],
+    "upload-file": [ADMIN, MODERATOR],
+    "delete-file": [ADMIN],
 }
 
 export const useVerifyForm = (obj) => {
