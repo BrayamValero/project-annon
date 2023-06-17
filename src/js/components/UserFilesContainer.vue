@@ -132,6 +132,7 @@ watch(
                         variant="danger"
                         size="sm"
                         @click="fileStore.deleteFile(item.id)"
+                        v-ability="'delete-file'"
                     >
                         <i class="bi bi-trash-fill"></i>
                     </b-button>

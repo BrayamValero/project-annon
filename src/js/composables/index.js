@@ -3,10 +3,18 @@ import Swal from "sweetalert2"
 import jwt_decode from "jwt-decode"
 
 export const useAbilities = {
+    // Users
     "add-user": ["admin"],
     "edit-user": ["admin"],
     "edit-password": ["admin"],
     "delete-user": ["admin"],
+    // Folders
+    "add-folder": ["admin"],
+    "edit-folder": ["admin"],
+    "delete-folder": ["admin"],
+    // Files
+    "upload-file": ["admin"],
+    "delete-file": ["admin"],
 }
 
 export const useVerifyForm = (obj) => {

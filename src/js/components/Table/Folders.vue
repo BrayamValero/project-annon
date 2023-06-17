@@ -117,7 +117,12 @@ watch(folders, () => {
             </b-col>
             <b-col cols="6" class="text-right">
                 <!-- Add New Folder -->
-                <b-button variant="success" size="sm" @click="addFolder">
+                <b-button
+                    variant="success"
+                    size="sm"
+                    @click="addFolder"
+                    v-ability="'add-folder'"
+                >
                     Agregar
                 </b-button>
             </b-col>
@@ -138,6 +143,7 @@ watch(folders, () => {
                     variant="warning"
                     size="sm"
                     @click="editFolder(item)"
+                    v-ability="'edit-folder'"
                 >
                     <i class="bi bi-pencil-fill"></i>
                 </b-button>
@@ -145,6 +151,7 @@ watch(folders, () => {
                     variant="danger"
                     size="sm"
                     @click="deleteFolder(item.id)"
+                    v-ability="'delete-folder'"
                 >
                     <i class="bi bi-trash-fill"></i>
                 </b-button>

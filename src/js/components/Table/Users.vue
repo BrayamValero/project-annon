@@ -187,6 +187,7 @@ watch(users, () => {
                         <i class="bi bi-key-fill"></i>
                     </b-button>
                     <b-button
+                        v-if="item.role_id != 1"
                         variant="danger"
                         size="sm"
                         @click="deleteUser(item)"

@@ -113,7 +113,13 @@ const submitFiles = () => {
             @addfile="handleFilePondAddFile"
             @removefile="handleFilePondRemoveFile"
         />
-        <b-button variant="primary" class="w-100" @click="submitFiles" block>
+        <b-button
+            variant="primary"
+            class="w-100"
+            @click="submitFiles"
+            block
+            v-ability="'upload-file'"
+        >
             Subir Archivos
         </b-button>
     </div>
