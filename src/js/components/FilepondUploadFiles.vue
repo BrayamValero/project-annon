@@ -88,7 +88,7 @@ const submitFiles = () => {
             if (success) {
                 // Resetting Data & Removing Filepond Preview Files
                 Object.assign(filesData, dataFormat)
-                filepondFiles.value.removeFile()
+                filepondFiles.value.removeFiles()
             }
         })
     }
