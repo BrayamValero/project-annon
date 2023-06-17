@@ -1,6 +1,6 @@
 import axios from "axios"
 import { defineStore } from "pinia"
-import { useVerifyForm } from "@composable"
+import { useVerifyForm, useSwal } from "@composable"
 
 // Defining State
 const state = () => ({
@@ -47,7 +47,13 @@ const actions = {
                 this.router.push({ name: "Dashboard" })
             })
             .catch((error) => {
-                console.log(error)
+                const { data, status } = error.response
+                useSwal({
+                    title: "Error " + status,
+                    text: data.message,
+                    icon: "error",
+                    showConfirmButton: false,
+                })
             })
     },
     async logout() {
