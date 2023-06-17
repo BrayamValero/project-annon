@@ -1,5 +1,6 @@
 import axios from "axios"
 import { defineStore } from "pinia"
+import { useSwal } from "@composable"
 
 // Defining State
 const state = () => ({
@@ -69,15 +70,27 @@ const actions = {
             })
     },
     async deleteFile(id) {
-        axios
-            .post("files/delete", { id })
-            .then(() => {
-                const index = this.files.findIndex((el) => el.id == id)
-                this.files.splice(index, 1)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        // Sweet Alerts: Delete Prompt
+        const { isConfirmed } = await useSwal({
+            icon: "warning",
+            title: "¿Estas seguro?",
+            text: "No podrás recuperar este archivo luego",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+        })
+        // Axios: Wrapping confirmation inside prompt response
+        if (isConfirmed) {
+            axios
+                .post("files/delete", { id })
+                .then(() => {
+                    const index = this.files.findIndex((el) => el.id == id)
+                    this.files.splice(index, 1)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
     },
 }
 
