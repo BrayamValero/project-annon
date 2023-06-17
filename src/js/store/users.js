@@ -2,6 +2,7 @@ import axios from "axios"
 import { set } from "vue"
 import { defineStore } from "pinia"
 import { useVerifyForm } from "@composable"
+import { useSwal } from "@composable"
 
 // Defining State
 const state = () => ({
@@ -25,49 +26,68 @@ const actions = {
     },
     async addUser(user) {
         if (!useVerifyForm(user)) return
-        axios
+        return axios
             .post("users", user)
             .then(({ data }) => {
                 this.users.push(data)
+                return true
             })
             .catch((error) => {
                 console.log(error)
+                return false
             })
     },
     async editUser(user) {
         if (!useVerifyForm(user)) return
-        axios
+        return axios
             .post("users/edit", user)
             .then(({ data }) => {
                 const index = this.users.findIndex((el) => el.id === data.id)
                 set(this.users, index, data)
+                return true
             })
             .catch((error) => {
                 console.log(error)
+                return false
             })
     },
     async editPassword(user) {
         if (!useVerifyForm(user)) return
-        axios
+
+        return axios
             .post("users/edit-password", user)
             .then(({ data }) => {
                 const index = this.users.findIndex((el) => el.id === data.id)
                 set(this.users, index, data)
+                return true
             })
             .catch((error) => {
                 console.log(error)
+                return false
             })
     },
     async deleteUser(id) {
-        axios
-            .post("users/delete", { id })
-            .then(() => {
-                const index = this.users.findIndex((el) => el.id == id)
-                this.users.splice(index, 1)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        // Sweet Alerts: Delete Prompt
+        const { isConfirmed } = await useSwal({
+            icon: "warning",
+            title: "¿Estas seguro?",
+            text: "No podrás recuperar este usuario luego",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+        })
+        // Axios: Wrapping confirmation inside prompt response
+        if (isConfirmed) {
+            axios
+                .post("users/delete", { id })
+                .then(() => {
+                    const index = this.users.findIndex((el) => el.id == id)
+                    this.users.splice(index, 1)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
     },
 }
 

@@ -112,12 +112,16 @@ const deleteUser = ({ id }) => {
 
 // Submitting form
 const submitForm = (action) => {
+    let isSuccess
     if (action === "add") {
-        userStore.addUser(formData)
+        isSuccess = userStore.addUser(formData)
     } else if (action == "edit") {
-        userStore.editUser(formData)
+        isSuccess = userStore.editUser(formData)
     } else if (action == "password") {
-        userStore.editPassword(formData)
+        isSuccess = userStore.editPassword(formData)
+    }
+    if (isSuccess) {
+        formUserModal.value.hide()
     }
 }
 
