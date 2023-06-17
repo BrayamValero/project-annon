@@ -1,10 +1,10 @@
 import axios from "axios"
 import { defineStore } from "pinia"
-import { useVerifyForm, useSwal } from "@composable"
+import { useVerifyForm, useSwal, useDecodeJWT } from "@composable"
 
 // Defining State
 const state = () => ({
-    token: null,
+    user: null,
 })
 
 const getters = {
@@ -23,10 +23,11 @@ const actions = {
         if (TOKEN) {
             // Renew Expiration Time, setting token state and defining axios headers.
             this.cookies.set("token", TOKEN, "1d")
-            this.token = TOKEN
             axios.defaults.headers.common = {
                 Authorization: `Bearer ${TOKEN}`,
             }
+            // Decrypt and get user info
+            this.user = useDecodeJWT(TOKEN)
         }
     },
     async login(user) {
@@ -42,7 +43,7 @@ const actions = {
                 axios.defaults.headers.common = {
                     Authorization: `Bearer ${data["data"]}`,
                 }
-                this.token = data["data"]
+                this.user = useDecodeJWT(data["data"])
                 this.cookies.set("token", data["data"], "1d")
                 this.router.push({ name: "Dashboard" })
             })
@@ -61,7 +62,7 @@ const actions = {
         axios.defaults.headers.common = null
         // Replace with Cookies
         this.cookies.remove("token")
-        this.token = null
+        this.user = null
         this.router.push({ name: "Home" })
     },
 }

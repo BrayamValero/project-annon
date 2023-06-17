@@ -1,5 +1,6 @@
 // ES6 Modules or TypeScript
 import Swal from "sweetalert2"
+import jwt_decode from "jwt-decode"
 
 export const useVerifyForm = (obj) => {
     for (let key in obj) {
@@ -26,3 +27,6 @@ export const useVerifyForm = (obj) => {
 export const useSwal = async (options) => {
     return Swal.fire(options)
 }
+
+// Sweet Alerts: Options must be an object
+export const useDecodeJWT = (token) => jwt_decode(token)
