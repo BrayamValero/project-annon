@@ -52,6 +52,30 @@ const actions = {
                 console.log(error)
             })
     },
+    async downloadFiles() {
+        axios
+            .get("download-all", {
+                responseType: "blob",
+            })
+            .then(({ data }) => {
+                const blob = new Blob([data], { type: "application/zip" })
+                const fileName = "backup.zip"
+
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    //  Internet Explorer or Microsoft Edge
+                    window.navigator.msSaveOrOpenBlob(blob, fileName)
+                } else {
+                    // Others
+                    const downloadLink = document.createElement("a")
+                    downloadLink.href = window.URL.createObjectURL(blob)
+                    downloadLink.download = fileName
+                    downloadLink.click()
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
     async viewFile({ url_source }) {
         axios
             .get("files/view", {

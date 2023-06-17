@@ -57,6 +57,17 @@ const getSelectedToggleName = computed(() => {
                             </p>
                         </b-col>
                         <b-col cols="4" class="text-right">
+                            <!-- Download All -->
+                            <b-button
+                                variant="primary"
+                                class="mb-3"
+                                @click="fileStore.downloadFiles()"
+                                v-ability="'edit-folder'"
+                            >
+                                <i class="bi bi-download mr-1"></i>
+                                Descargar Todos
+                            </b-button>
+
                             <!-- Toggle View -->
                             <b-form-group
                                 v-slot="{ ariaDescribedby }"
