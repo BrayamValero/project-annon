@@ -24,12 +24,25 @@ const { user } = storeToRefs(authStore)
                 </b-nav-item>
                 <template v-else>
                     <b-nav-item>
-                        <div>{{ user.fullname }}</div>
-                        <div>
-                            {{ user.role_name }}
+                        <div class="d-flex flex-row">
+                            <i
+                                class="bi bi-person-circle mr-3"
+                                style="font-size: 28px"
+                            ></i>
+                            <div class="d-flex flex-column">
+                                <small class="font-weight-bold">
+                                    {{ user.fullname }}
+                                </small>
+                                <small>
+                                    {{ user.role_name }}
+                                </small>
+                            </div>
                         </div>
                     </b-nav-item>
-                    <b-nav-item @click="authStore.logout()">
+                    <b-nav-item
+                        @click="authStore.logout()"
+                        class="d-flex align-items-center"
+                    >
                         Cerrar Sesión
                     </b-nav-item>
                 </template>
