@@ -93,7 +93,7 @@ const actions = {
                 console.log(error)
             })
     },
-    async deleteFile(id) {
+    async deleteFile({ id, url_source }) {
         // Sweet Alerts: Delete Prompt
         const { isConfirmed } = await useSwal({
             icon: "warning",
@@ -106,7 +106,7 @@ const actions = {
         // Axios: Wrapping confirmation inside prompt response
         if (isConfirmed) {
             axios
-                .post("files/delete", { id })
+                .post("files/delete", { id, url_source })
                 .then(() => {
                     const index = this.files.findIndex((el) => el.id == id)
                     this.files.splice(index, 1)
