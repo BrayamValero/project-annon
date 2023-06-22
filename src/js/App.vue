@@ -25,7 +25,7 @@ onMounted(
 
 <style lang="scss">
 .Content {
-    background: url("/public/img/hero-banner.jpg");
+    background: url("/img/hero-banner.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
