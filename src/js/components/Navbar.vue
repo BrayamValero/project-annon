@@ -9,7 +9,9 @@ const { user } = storeToRefs(authStore)
 
 <template>
     <b-navbar toggleable="sm" type="dark" variant="dark">
-        <b-navbar-brand to="/">Backup Patios</b-navbar-brand>
+        <b-navbar-brand to="/">
+            <img src="/img/nav-logo.png" alt="logo" width="150" />
+        </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
@@ -17,11 +19,13 @@ const { user } = storeToRefs(authStore)
                 <b-nav-item v-if="user" to="/usuarios">Usuarios</b-nav-item>
                 <b-nav-item v-if="user" to="/carpetas">Carpetas</b-nav-item>
                 <b-nav-item v-if="user" to="/roles">Roles</b-nav-item>
+                <b-nav-item v-if="user" to="/manual">Manual</b-nav-item>
             </b-navbar-nav>
             <b-navbar-nav class="ml-auto">
                 <b-nav-item v-if="!user" to="/login">
                     Iniciar Sesión
                 </b-nav-item>
+                <b-nav-item v-if="!user" to="/manual"> Manual </b-nav-item>
                 <template v-else>
                     <b-nav-item>
                         <div class="d-flex flex-row">

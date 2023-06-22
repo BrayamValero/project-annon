@@ -4,6 +4,7 @@ import VueCookies from "vue-cookies"
 // Views Defined
 import Index from "@page/Index.vue"
 import Login from "@page/Login.vue"
+import Manual from "@page/Manual.vue"
 import Dashboard from "@page/Dashboard.vue"
 import Users from "@page/Users.vue"
 import Folders from "@page/Folders.vue"
@@ -33,6 +34,11 @@ const routes = [
         name: "Home",
         component: Index,
         beforeEnter: userLogged,
+    },
+    {
+        path: "/manual",
+        name: "Manual",
+        component: Manual,
     },
     {
         path: "/login",

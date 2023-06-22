@@ -11,8 +11,20 @@ onBeforeMount(() => authStore.setToken())
 </script>
 
 <template>
-    <div>
+    <div class="Main">
         <Navbar />
-        <router-view></router-view>
+        <router-view class="Content"></router-view>
     </div>
 </template>
+
+<style lang="scss">
+.Main {
+    background: url("/public/img/hero-banner.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+.Content {
+    height: calc(100vh - 76.4375px);
+}
+</style>

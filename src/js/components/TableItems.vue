@@ -26,7 +26,7 @@ const props = defineProps({
         empty-text="No hay registros"
         head-variant="dark"
         responsive
-        class="my-4"
+        class="my-4 bg-white"
     >
         <!-- Dynamic Slot Names -->
         <template

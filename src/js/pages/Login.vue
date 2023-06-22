@@ -20,53 +20,58 @@ const submitForm = () => {
 </script>
 
 <template>
-    <div class="Login">
-        <b-container class="my-5">
-            <b-row class="justify-content-center">
-                <b-col cols="8">
-                    <h1>Bienvenidos a Backup Los Patios</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Nihil, ullam?
-                    </p>
-                    <b-form>
-                        <b-form-group
-                            label="Correo Electrónico"
-                            label-for="input-email"
-                            description="Ingresa el correo usado al momento del registro."
-                        >
-                            <b-form-input
-                                id="input-email"
-                                v-model="userData.email"
-                                type="email"
-                                placeholder="Ingresa Correo"
-                                required
-                            ></b-form-input>
-                        </b-form-group>
+    <b-container class="Login">
+        <b-row class="h-100 justify-content-center align-items-center">
+            <b-col cols="6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <h3 class="font-weight-bold">Bienvenido</h3>
+                            <p>
+                                Por favor ingrese sus credenciales para acceder
+                                al sistema
+                            </p>
+                        </div>
+                        <b-form>
+                            <b-form-group
+                                label="Correo Electrónico"
+                                label-for="input-email"
+                                description="Ingresa el correo usado al momento del registro."
+                            >
+                                <b-form-input
+                                    id="input-email"
+                                    v-model="userData.email"
+                                    type="email"
+                                    placeholder="Ingresa Correo"
+                                    required
+                                ></b-form-input>
+                            </b-form-group>
 
-                        <b-form-group
-                            label="Contraseña"
-                            label-for="input-password"
-                            description="Nunca compartiremos tu contraseña con nadie."
-                        >
-                            <b-form-input
-                                id="input-password"
-                                type="password"
-                                v-model="userData.password"
-                                placeholder="Ingresa Contraseña"
-                                required
-                            ></b-form-input>
-                        </b-form-group>
-                        <b-button
-                            type="button"
-                            variant="primary"
-                            @click="submitForm"
-                        >
-                            Iniciar Sesión
-                        </b-button>
-                    </b-form>
-                </b-col>
-            </b-row>
-        </b-container>
-    </div>
+                            <b-form-group
+                                label="Contraseña"
+                                label-for="input-password"
+                                description="Nunca compartiremos tu contraseña con nadie."
+                            >
+                                <b-form-input
+                                    id="input-password"
+                                    type="password"
+                                    v-model="userData.password"
+                                    placeholder="Ingresa Contraseña"
+                                    required
+                                ></b-form-input>
+                            </b-form-group>
+                            <b-button
+                                type="button"
+                                variant="primary"
+                                @click="submitForm"
+                                class="w-100"
+                            >
+                                Iniciar Sesión
+                            </b-button>
+                        </b-form>
+                    </div>
+                </div>
+            </b-col>
+        </b-row>
+    </b-container>
 </template>
