@@ -1,40 +1,49 @@
 <script setup>
+import { ref } from "vue"
 const steps = [
     {
         title: "Paso 1",
         description: "Primero debes ingresar al sistema a través de un login.",
-        url: "/",
+        url: "/video/step-1.mp4",
     },
     {
         title: "Paso 2",
         description:
             "Una vez dentro del sistema encontraras una interfaz en donde podrás subir archivos acordes a la dependencia en la que pertenezcas, podrás descargar el archivo, verlo o eliminarlo.",
-        url: "/",
+        url: "/video/step-2.mp4",
     },
     {
         title: "Paso 3",
         description:
             "Contaras con acceso a los archivos por medio de dos tipos de vistas, ya sea por tablas o por carpetas y podrás filtrar dependiendo del archivo que busques.",
-        url: "/",
+        url: "/video/step-3.mp4",
     },
     {
         title: "Paso 4",
         description:
             "Podrás ver los usuarios que se encuentren registrados en el sistema, así mismo, tendrás la opción de editar los datos del usuario o eliminarlo.",
-        url: "/",
+        url: "/video/step-4.mp4",
     },
     {
         title: "Paso 5",
         description:
             "Podrás ver las carpetas de las distintas dependencias, filtrar por la que necesites, editarla, eliminarla o agregar una nueva carpeta.",
-        url: "/",
+        url: "/video/step-5.mp4",
     },
     {
         title: "Paso 6",
         description: "Cierre de sesión",
-        url: "/",
+        url: "/video/step-6.mp4",
     },
 ]
+
+const selectedVideo = ref(null)
+const videoModal = ref(0)
+
+const watchVideo = (url) => {
+    selectedVideo.value = url
+    videoModal.value.show()
+}
 </script>
 
 <template>
@@ -75,8 +84,8 @@ const steps = [
                                     <b-button
                                         size="sm"
                                         variant="danger"
-                                        :href="url"
                                         class="w-100 mt-auto"
+                                        @click="watchVideo(url)"
                                     >
                                         Ver Video
                                     </b-button>
@@ -87,5 +96,17 @@ const steps = [
                 </b-col>
             </b-row>
         </b-container>
+        <!-- Video Modal -->
+        <b-modal
+            ref="videoModal"
+            title="Reproduciendo Video"
+            hide-footer
+            size="xl"
+        >
+            <video width="100%" height="100%" controls>
+                <source :src="selectedVideo" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+        </b-modal>
     </div>
 </template>
