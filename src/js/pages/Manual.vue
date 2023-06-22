@@ -57,6 +57,7 @@ const steps = [
                             v-for="(
                                 { title, description, url }, index
                             ) in steps"
+                            :key="'step-' + index"
                             class="mb-5"
                         >
                             <div class="card h-100">
