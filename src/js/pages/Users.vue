@@ -4,7 +4,7 @@ import TableUsers from "@component/Table/Users.vue"
 
 <template>
     <div class="Users">
-        <b-container class="my-5">
+        <b-container class="py-5">
             <b-row class="justify-content-center">
                 <b-col cols="10" class="text-center">
                     <h3 class="font-weight-bold">Usuarios</h3>

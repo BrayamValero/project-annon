@@ -18,13 +18,12 @@ onBeforeMount(() => authStore.setToken())
 </template>
 
 <style lang="scss">
-.Main {
+.Content {
     background: url("/public/img/hero-banner.jpg");
     background-repeat: no-repeat;
-    background-size: cover;
     background-position: center center;
-}
-.Content {
-    height: calc(100vh - 76.4375px);
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    min-height: calc(100vh - 76.4375px);
 }
 </style>

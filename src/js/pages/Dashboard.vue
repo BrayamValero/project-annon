@@ -30,61 +30,67 @@ const getSelectedToggleName = computed(() => {
 </script>
 
 <template>
-    <b-container class="Dashboard my-5">
-        <b-row class="justify-content-center">
-            <b-col cols="4">
-                <h3 class="font-weight-bold">Backup Los Patios</h3>
-                <p class="text-muted">
-                    Bienvenidos a la aplicación, acá podrás subir, editar y
-                    eliminar archivos los cuales se estarán guardando
-                    diréctamente en la nube.
-                </p>
-                <FilepondUploadFiles class="mt-4" />
-            </b-col>
+    <div class="Dashboard">
+        <b-container class="h-100 py-5">
+            <b-row class="justify-content-center">
+                <b-col cols="4">
+                    <h3 class="font-weight-bold">Backup Los Patios</h3>
+                    <p class="text-muted">
+                        Bienvenidos a la aplicación, acá podrás subir, editar y
+                        eliminar archivos los cuales se estarán guardando
+                        diréctamente en la nube.
+                    </p>
+                    <FilepondUploadFiles class="mt-4" />
+                </b-col>
 
-            <b-col cols="8">
-                <b-row class="align-items-center">
-                    <b-col cols="8">
-                        <h3 class="font-weight-bold">
-                            {{ getSelectedToggleName }}
-                        </h3>
-                        <p class="text-muted">
-                            Prueba cambiando entre las vistas disponibles, ya
-                            sea que quieras ver los archivos de las carpetas en
-                            una tabla o quieras verlos en miniaturas.
-                        </p>
-                    </b-col>
-                    <b-col cols="4" class="text-right">
-                        <!-- Download All -->
-                        <b-button
-                            variant="primary"
-                            class="mb-3"
-                            @click="fileStore.downloadFiles()"
-                            v-ability="'edit-folder'"
-                        >
-                            <i class="bi bi-download mr-1"></i>
-                            Descargar Todos
-                        </b-button>
+                <b-col cols="8">
+                    <b-row class="align-items-center">
+                        <b-col cols="8">
+                            <h3 class="font-weight-bold">
+                                {{ getSelectedToggleName }}
+                            </h3>
+                            <p class="text-muted">
+                                Prueba cambiando entre las vistas disponibles,
+                                ya sea que quieras ver los archivos de las
+                                carpetas en una tabla o quieras verlos en
+                                miniaturas.
+                            </p>
+                        </b-col>
+                        <b-col cols="4" class="text-right">
+                            <!-- Download All -->
+                            <b-button
+                                variant="primary"
+                                class="mb-3"
+                                @click="fileStore.downloadFiles()"
+                                v-ability="'edit-folder'"
+                            >
+                                <i class="bi bi-download mr-1"></i>
+                                Descargar Todos
+                            </b-button>
 
-                        <!-- Toggle View -->
-                        <b-form-group v-slot="{ ariaDescribedby }" class="mb-4">
-                            <b-form-radio-group
-                                v-model="selectedView"
-                                :options="viewOptions"
-                                :aria-describedby="ariaDescribedby"
-                                name="view-option"
-                                buttons
-                            ></b-form-radio-group>
-                        </b-form-group>
-                    </b-col>
-                </b-row>
+                            <!-- Toggle View -->
+                            <b-form-group
+                                v-slot="{ ariaDescribedby }"
+                                class="mb-4"
+                            >
+                                <b-form-radio-group
+                                    v-model="selectedView"
+                                    :options="viewOptions"
+                                    :aria-describedby="ariaDescribedby"
+                                    name="view-option"
+                                    buttons
+                                ></b-form-radio-group>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
 
-                <!-- Main Table & Files view (With Search & Pagination)-->
-                <UserFilesContainer
-                    :files="files"
-                    :selected-view="selectedView"
-                />
-            </b-col>
-        </b-row>
-    </b-container>
+                    <!-- Main Table & Files view (With Search & Pagination)-->
+                    <UserFilesContainer
+                        :files="files"
+                        :selected-view="selectedView"
+                    />
+                </b-col>
+            </b-row>
+        </b-container>
+    </div>
 </template>
