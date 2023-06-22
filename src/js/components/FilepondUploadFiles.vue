@@ -97,31 +97,35 @@ const submitFiles = () => {
 
 <template>
     <div class="FilepondUploadFiles">
-        <b-form-select
-            v-model="filesData.folderId"
-            :options="getFolderOptions"
-            class="mb-3"
-        />
-        <file-pond
-            ref="filepondFiles"
-            name="files"
-            class-name="FilepondUploadFiles-file"
-            label-idle="Arrastra los archivos aqui"
-            allow-multiple="true"
-            :accepted-file-types="null"
-            :files="files"
-            @addfile="handleFilePondAddFile"
-            @removefile="handleFilePondRemoveFile"
-        />
-        <b-button
-            variant="primary"
-            class="w-100"
-            @click="submitFiles"
-            block
-            v-ability="'upload-file'"
-        >
-            Subir Archivos
-        </b-button>
+        <div class="card">
+            <div class="card-body">
+                <b-form-select
+                    v-model="filesData.folderId"
+                    :options="getFolderOptions"
+                    class="mb-3"
+                />
+                <file-pond
+                    ref="filepondFiles"
+                    name="files"
+                    class-name="FilepondUploadFiles-file"
+                    label-idle="Arrastra los archivos aqui"
+                    allow-multiple="true"
+                    :accepted-file-types="null"
+                    :files="files"
+                    @addfile="handleFilePondAddFile"
+                    @removefile="handleFilePondRemoveFile"
+                />
+                <b-button
+                    variant="primary"
+                    class="w-100"
+                    @click="submitFiles"
+                    block
+                    v-ability="'upload-file'"
+                >
+                    Subir Archivos
+                </b-button>
+            </div>
+        </div>
     </div>
 </template>
 

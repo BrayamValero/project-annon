@@ -116,6 +116,38 @@ const actions = {
                 })
         }
     },
+    scheduleDownload() {
+        const DATE = new Date()
+        const CURRENT_HOUR = DATE.getHours()
+        const CURRENT_MINUTES = DATE.getMinutes()
+
+        // Setting AM and PM format (9:30 am)
+        const HOUR_AM = 9
+        const MIN_AM = 30
+        // Setting PM format (5:30 pm)
+        const HOUR_PM = 17
+        const MIN_PM = 30
+
+        const getAlert = () =>
+            useSwal({
+                title: "Aviso",
+                icon: "warning",
+                html: "Descargando archivos automáticamente",
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+            })
+
+        console.log("Monitoreando hora:", `${CURRENT_HOUR}:${CURRENT_MINUTES}`)
+
+        if (CURRENT_HOUR === HOUR_AM && CURRENT_MINUTES === MIN_AM) {
+            getAlert()
+            this.downloadFiles()
+        } else if (CURRENT_HOUR === HOUR_PM && CURRENT_MINUTES === MIN_PM) {
+            getAlert()
+            this.downloadFiles()
+        }
+    },
 }
 
 export const useFileStore = defineStore("file", {
