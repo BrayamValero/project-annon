@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from "vue"
 // Adding Folder Store
 import { useFileStore } from "@store/files"
 
@@ -9,12 +10,32 @@ const fileStore = useFileStore()
 const props = defineProps({
     file: Object,
 })
+
+const getFileFormat = computed(() => {
+    const { type } = props.file
+
+    const fileType = {
+        default: "file",
+        pdf: "file-pdf",
+        word: "file-word",
+        txt: "file-text",
+        zip: "file-earmark-zip",
+        excel: "file-earmark-spreadsheet",
+        svg: "filetype-svg",
+        png: "filetype-png",
+        jpg: "filetype-jpg",
+        mp4: "filetype-mp4",
+        exe: "filetype-exe",
+    }
+
+    return `bi-${fileType[type]}` || `bi-${fileType["default"]}`
+})
 </script>
 
 <template>
     <div class="File">
         <div class="File-card">
-            <b-icon icon="file-pdf" class="File-icon"></b-icon>
+            <i :class="['File-icon bi', getFileFormat]"></i>
             <div class="File-name">
                 {{ file.name }}
             </div>
@@ -54,8 +75,10 @@ const props = defineProps({
 <style lang="scss" scoped>
 .File {
     position: relative;
+
     &-card {
-        border: 1px solid gray;
+        background-color: white;
+        border: 1px solid rgba(0, 0, 0, 0.125);
         border-radius: 4px;
         padding: 1rem;
         display: flex;

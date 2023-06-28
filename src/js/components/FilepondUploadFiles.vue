@@ -3,6 +3,7 @@ import { storeToRefs } from "pinia"
 import { ref, reactive } from "vue"
 import { useFileStore } from "@store/files"
 import { useFolderStore } from "@store/folders"
+import { useSwal } from "@composable"
 
 // access the `store` variable anywhere in the component ✨
 const fileStore = useFileStore()
@@ -83,6 +84,7 @@ const submitFiles = () => {
         // Append all file types
         FORM_DATA.append("fileTypes[]", type)
     })
+
     if (files.length > 0) {
         fileStore.addFiles(FORM_DATA).then((success) => {
             if (success) {
@@ -90,6 +92,13 @@ const submitFiles = () => {
                 Object.assign(filesData, dataFormat)
                 filepondFiles.value.removeFiles()
             }
+        })
+    } else {
+        useSwal({
+            title: "Whoops",
+            text: "Debes agregar (1) archivo como mínimo",
+            icon: "warning",
+            showConfirmButton: false,
         })
     }
 }

@@ -17,17 +17,22 @@ const getters = {
 
 // Defining Actions
 const actions = {
+    setExpirationTime(token) {
+        // Renew Expiration Time
+        this.cookies.set("token", token, "3d")
+    },
     setToken() {
         const TOKEN = this.cookies.get("token")
 
         if (TOKEN) {
-            // Renew Expiration Time, setting token state and defining axios headers.
-            this.cookies.set("token", TOKEN, "1d")
+            // Setting new expiration Token
+            this.setExpirationTime(TOKEN)
+            // Decrypt and get user info
+            this.user = useDecodeJWT(TOKEN)
+            // Defining axios headers.
             axios.defaults.headers.common = {
                 Authorization: `Bearer ${TOKEN}`,
             }
-            // Decrypt and get user info
-            this.user = useDecodeJWT(TOKEN)
         }
     },
     async login(user) {
@@ -43,8 +48,8 @@ const actions = {
                 axios.defaults.headers.common = {
                     Authorization: `Bearer ${data["data"]}`,
                 }
+                this.setExpirationTime(data["data"])
                 this.user = useDecodeJWT(data["data"])
-                this.cookies.set("token", data["data"], "1d")
                 this.router.push({ name: "Dashboard" })
             })
             .catch((error) => {
