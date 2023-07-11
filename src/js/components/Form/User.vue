@@ -1,11 +1,24 @@
 <script setup>
-import { onMounted } from "vue"
+import { storeToRefs } from "pinia"
+import { computed, onMounted } from "vue"
 
 // Adding Role Store
 import { useRoleStore } from "@store/roles"
+import { useAuthStore } from "@store/auth"
 
 // Accessing the Role Store variables
 const roleStore = useRoleStore()
+const authStore = useAuthStore()
+
+const { user } = storeToRefs(authStore)
+
+const getRoleOptions = computed(() => {
+    const { role_name } = user.value
+    const options = roleStore.getRoleOptions
+    return role_name !== "administrador"
+        ? options.filter((opt) => opt.text !== "administrador")
+        : options
+})
 
 defineProps({
     form: Object,
@@ -52,7 +65,7 @@ onMounted(async () => {
         <b-form-group label="Rol" v-if="type !== 'password'">
             <b-form-select
                 v-model="form.role_id"
-                :options="roleStore.getRoleOptions"
+                :options="getRoleOptions"
                 required
             ></b-form-select>
         </b-form-group>

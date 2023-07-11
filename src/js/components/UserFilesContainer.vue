@@ -117,6 +117,7 @@ watch(
                         variant="primary"
                         size="sm"
                         @click="fileStore.downloadFile(item)"
+                        v-ability="'download-files'"
                     >
                         <i class="bi bi-download"></i>
                     </b-button>

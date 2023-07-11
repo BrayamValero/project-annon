@@ -19,6 +19,7 @@ export const useAbilities = {
     // Files
     "upload-file": [ADMIN, MODERATOR],
     "delete-file": [ADMIN],
+    "download-files": [ADMIN],
 }
 
 export const useVerifyForm = (obj) => {

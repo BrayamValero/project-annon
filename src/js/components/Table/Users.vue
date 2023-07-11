@@ -6,11 +6,13 @@ import FormUser from "@component/Form/User.vue"
 // Adding User Store
 import { storeToRefs } from "pinia"
 import { useUserStore } from "@store/users"
-import { useAuthStore } from "@store/auth" // checkAbilities
+import { useAuthStore } from "@store/auth"
 
 // Accessing the User Store variables
 const userStore = useUserStore()
+const authStore = useAuthStore()
 const { users } = storeToRefs(userStore)
+const { user } = storeToRefs(authStore)
 
 // Init Ref values
 const filter = ref("")
@@ -174,6 +176,19 @@ watch(users, () => {
                         variant="warning"
                         size="sm"
                         @click="editUser(item)"
+                        v-ability="'edit-user'"
+                        v-if="
+                            user.role_name === 'administrador' &&
+                            item.role_name === 'administrador'
+                        "
+                    >
+                        <i class="bi bi-pencil-fill"></i>
+                    </b-button>
+                    <b-button
+                        variant="warning"
+                        size="sm"
+                        @click="editUser(item)"
+                        v-else-if="item.role_name !== 'administrador'"
                         v-ability="'edit-user'"
                     >
                         <i class="bi bi-pencil-fill"></i>

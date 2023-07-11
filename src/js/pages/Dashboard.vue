@@ -62,7 +62,7 @@ const getSelectedToggleName = computed(() => {
                                 variant="primary"
                                 class="mb-3"
                                 @click="fileStore.downloadFiles()"
-                                v-ability="'edit-folder'"
+                                v-ability="'download-files'"
                             >
                                 <i class="bi bi-download mr-1"></i>
                                 Descargar Todos
